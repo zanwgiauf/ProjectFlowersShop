@@ -9,6 +9,7 @@ import Models.Admin;
 import Models.Customer;
 import Models.Employee;
 import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
@@ -28,15 +29,11 @@ public class AccountDAO {
     Connection conn;
 
     public AccountDAO() {
-        try {
-            conn = DBConnection.connect();
-            if (conn != null) {
-                System.out.println("Database connection established successfully.");
-            } else {
-                System.out.println("Failed to establish database connection.");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        conn = DBConnection.connect();
+        if (conn != null) {
+            System.out.println("Database connection established successfully.");
+        } else {
+            System.out.println("Failed to establish database connection.");
         }
     }
 
@@ -88,7 +85,7 @@ public class AccountDAO {
             ps.setString(2, getMd5(password));
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                employee = new Employee(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6));
+                employee = new Employee(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6),rs.getInt(7));
             }
         } catch (SQLException ex) {
             Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -105,7 +102,7 @@ public class AccountDAO {
             ps.setString(2, getMd5(password));
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                customer = new Customer(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
+                customer = new Customer(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7),rs.getInt(8));
             }
             rs.close();
             ps.close();
@@ -128,13 +125,8 @@ public class AccountDAO {
     }
     // Hàm giải mã Base64 thành văn bản
 
-    public String decodeString(String encodedText) {
-        try {
-            byte[] decodedBytes = Base64.getDecoder().decode(encodedText.getBytes("UTF-8"));
-            return new String(decodedBytes, "UTF-8");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+    public String decodeString(String encoded) {
+        byte[] decodedBytes = Base64.getDecoder().decode(encoded);
+        return new String(decodedBytes, StandardCharsets.UTF_8);
     }
 }

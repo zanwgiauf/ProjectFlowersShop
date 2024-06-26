@@ -76,7 +76,7 @@
                         <a href="<%=request.getContextPath()%>/admin" class="fs-4 fw-bold d-flex justify-content-center align-items-center text-white">
                             <i class="bi bi-person-circle mx-2 "></i>
                             <span>Admin</span>
-                            
+
                         </a>
                         <div class="container d-flex justify-content-center"> <h5><%= ad.decodeString(fullName) %></h5></div>
                         <ul class="nav flex-column mt-3">
@@ -92,7 +92,7 @@
                                     My Store
                                 </a>
                             </li>
-                             <li class="nav-item">
+                            <li class="nav-item">
                                 <a class="nav-link" href="#">
                                     <i class="bi bi-list-check"></i>
                                     Manage Stock
@@ -114,7 +114,7 @@
                                     <a href="#" class="dropdown-item">Manage Customer Accounts</a>
                                 </div>
                             </li>
-                          
+
                             <li class="nav-item">
                                 <a class="nav-link" href="#">
                                     <i class="bi bi-clipboard"></i>
@@ -127,7 +127,10 @@
                                     Category
                                 </a>
                             </li>
-
+                            <li class="nav-item">
+                                <a href="<%= request.getContextPath() %>/admin/adminproducts" class="nav-link text-white">Manage Product <i class="bi bi-box"></i></a> 
+                                </a>
+                            </li>
                         </ul>
                         <form action="logout" method="post" class="mt-4 me-2" >
                             <button class="btn btn-outline-dark  w-100" style="border-radius: 16px" name="btnLogout">Logout</button>
@@ -136,7 +139,7 @@
                 </nav>
 
                 <main id="content" class="col-md-9 ml-sm-auto col-lg-10 px-md-4"style="width: 1020px;">
-                    
+
 
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                         <h1 class="h2">Dashboard</h1>

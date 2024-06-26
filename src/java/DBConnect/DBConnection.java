@@ -15,21 +15,26 @@ import java.util.logging.Logger;
  * @author Nguyen Van Giau - CE170449
  */
 public class DBConnection {
-
-    public static Connection connect() throws SQLException {
-        String server = "VANGIAU\\ZANGIAU";
-        String port = "1433";
-        String database = "FlowersShop";
-        String user = "sa";
-        String password = "123";
-        Connection conn = null;
+    private static final String urlConnect = "jdbc:sqlserver://LAPTOP-BCDMRMAF\\MYLAPTOP:1433;databasename=FlowersShop;user=sa;password=sa;characterEncoding=UTF-8;encrypt=true;trustServerCertificate=true;";
+    public static Connection connect() {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            conn = DriverManager.getConnection("jdbc:sqlserver://" + server + ":" + port + ";databaseName=" + database + ";user=" + user + ";password=" + password + ";encrypt=true;trustServerCertificate=true;");
-            System.out.println("Connection object: " + conn);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
+            // tao doi tuong connection 
+            Connection conn = DriverManager.getConnection(urlConnect);
+            return conn;
+        } catch(ClassNotFoundException | SQLException ex) {
+            System.out.println(ex);
+        } 
+        return null;
+    }
+    public static void closeConnection(Connection conn) {
+        if (conn != null) {
+            try {
+                conn.close();
+                System.out.println("Connection closed.");
+            } catch (SQLException ex) {
+                Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        return conn;
     }
 }

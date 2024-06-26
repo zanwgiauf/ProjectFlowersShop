@@ -13,14 +13,14 @@ import java.sql.Date;
 public class Order  {
 
     private int OrderID;
-    private Date dateCreate;
+    private String dateCreate;
     private String phone;
     private String address;
     private int totalPrice;
     private String note;
     private int status;
     private int paymentStatus;
-    private Date paymentCreateAt;
+    private String paymentCreateAt;
     private int customerID;
     private int employeeID;
     
@@ -29,7 +29,7 @@ public class Order  {
        
     }
 
-    public Order(int OrderID, Date dateCreate, String phone, String address, int totalPrice, String note, int status, int paymentStatus, Date paymentCreateAt, int customerID, int employeeID) {
+    public Order(int OrderID, String dateCreate, String phone, String address, int totalPrice, String note, int status, int paymentStatus, String paymentCreateAt, int customerID, int employeeID) {
         this.OrderID = OrderID;
         this.dateCreate = dateCreate;
         this.phone = phone;
@@ -42,7 +42,6 @@ public class Order  {
         this.customerID = customerID;
         this.employeeID = employeeID;
     }
-    
 
     public int getOrderID() {
         return OrderID;
@@ -52,11 +51,11 @@ public class Order  {
         this.OrderID = OrderID;
     }
 
-    public Date getDateCreate() {
+    public String getDateCreate() {
         return dateCreate;
     }
 
-    public void setDateCreate(Date dateCreate) {
+    public void setDateCreate(String dateCreate) {
         this.dateCreate = dateCreate;
     }
 
@@ -108,11 +107,11 @@ public class Order  {
         this.paymentStatus = paymentStatus;
     }
 
-    public Date getPaymentCreateAt() {
+    public String getPaymentCreateAt() {
         return paymentCreateAt;
     }
 
-    public void setPaymentCreateAt(Date paymentCreateAt) {
+    public void setPaymentCreateAt(String paymentCreateAt) {
         this.paymentCreateAt = paymentCreateAt;
     }
 
@@ -132,5 +131,6 @@ public class Order  {
         this.employeeID = employeeID;
     }
 
+    
     
 }
