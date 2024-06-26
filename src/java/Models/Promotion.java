@@ -89,5 +89,4 @@ public class Promotion {
         this.OrderID = OrderID;
     }
 
-    
 }

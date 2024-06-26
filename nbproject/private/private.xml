@@ -3,40 +3,25 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/src/java/DAOs/AccountDAO.java</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/web/index.html</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/src/java/Models/Category.java</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/src/java/Models/Order.java</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/src/java/DAOs/ProductDAO.java</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/web/customer/purchaseHistory.jsp</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/web/customer/cart.jsp</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/src/java/Controller/HomeController.java</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/web/register.jsp</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/web/employee/employeeHome.jsp</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/web/admin/adminHome.jsp</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/src/java/Models/OrderDetail.java</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/src/java/Models/Customer.java</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/src/java/Controller/ProductController.java</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/src/java/DAOs/CategoryDAO.java</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/web/WEB-INF/web.xml</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/web/customer/orderDetails.jsp</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/src/java/DAOs/OrderDAO.java</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/web/META-INF/context.xml</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/src/java/Controller/RegisterController.java</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/src/java/Models/Cart.java</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/src/java/DBConnect/DBConnection.java</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/src/java/Models/PromotionOrder.java</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/src/java/Controller/OrderController.java</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/src/java/DAOs/OrderDetailDAO.java</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/web/index.jsp</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/src/java/Controller/EmployeeController.java</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/src/java/Controller/CategoryController.java</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/src/java/Models/Admin.java</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/src/java/Models/Product.java</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/web/login.jsp</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/src/java/Controller/AdminController.java</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/src/java/Controller/LoginController.java</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/src/java/Controller/LogoutController.java</file>
+            <file>file:/D:/giau/ProjectFlowersShop/web/forgot_password.jsp</file>
+            <file>file:/D:/giau/ProjectFlowersShop/web/reset_password.jsp</file>
+            <file>file:/D:/giau/ProjectFlowersShop/src/java/Controller/EmployeeController.java</file>
+            <file>file:/D:/giau/ProjectFlowersShop/web/admin/adminproducts.jsp</file>
+            <file>file:/D:/giau/ProjectFlowersShop/src/java/Models/Employee.java</file>
+            <file>file:/D:/giau/ProjectFlowersShop/src/java/DAOs/ProductDAO.java</file>
+            <file>file:/D:/giau/ProjectFlowersShop/src/java/Models/Product.java</file>
+            <file>file:/D:/giau/ProjectFlowersShop/src/java/Models/Customer.java</file>
+            <file>file:/D:/giau/ProjectFlowersShop/src/java/Models/Promotion.java</file>
+            <file>file:/D:/giau/ProjectFlowersShop/src/java/Controller/ResetPasswordController.java</file>
+            <file>file:/D:/giau/ProjectFlowersShop/src/java/Controller/ResetPasswordServlet.java</file>
+            <file>file:/D:/giau/ProjectFlowersShop/src/java/Controller/AdminProductController.java</file>
+            <file>file:/D:/giau/ProjectFlowersShop/src/java/Controller/ForgotPasswordServlet.java</file>
+            <file>file:/D:/giau/ProjectFlowersShop/src/java/Controller/LoginController.java</file>
+            <file>file:/D:/giau/ProjectFlowersShop/src/java/DAOs/CustomerDAO.java</file>
+            <file>file:/D:/giau/ProjectFlowersShop/src/java/DBConnect/DBConnection.java</file>
+            <file>file:/D:/giau/ProjectFlowersShop/web/index.jsp</file>
+            <file>file:/D:/giau/ProjectFlowersShop/src/java/DAOs/AccountDAO.java</file>
+            <file>file:/D:/giau/ProjectFlowersShop/web/admin/adminHome.jsp</file>
         </group>
     </open-files>
 </project-private>

@@ -67,6 +67,7 @@
                 Description: <input type="text" name="description" class="form-control" required><br>
                 Price: <input type="number" name="price" class="form-control" required><br>
                 Reduced Price: <input type="number" name="reducedPrice" class="form-control" required><br>
+                Quantity: <input type="number" name="quantity" class="form-control" required><br>
                 Image: <input type="file" name="image" class="form-control" required><br>
                 Category ID: <input type="number" name="categoryID" class="form-control" required><br>
                 <button type="submit" class="btn btn-primary">Add Product</button>
@@ -88,6 +89,7 @@
                                 Description: <input type="text" name="description" class="form-control" id="editProductDescription" required><br>
                                 Price: <input type="number" name="price" class="form-control" id="editProductPrice" required><br>
                                 Reduced Price: <input type="number" name="reducedPrice" class="form-control" id="editProductReducedPrice" required><br>
+                                Quantity: <input type="number" name="quantity" class="form-control" id="editProductQuantity" required><br>
                                 Existing Image: <img id="editProductImage" src="" alt="" width="50"><br>
                                 <input type="hidden" name="existingImage" id="editProductExistingImage">
                                 New Image: <input type="file" name="image" class="form-control"><br>
@@ -109,6 +111,7 @@
                             <th>Description</th>
                             <th>Price</th>
                             <th>Reduced Price</th>
+                            <th>Quantity</th>
                             <th>Image</th>
                             <th>Category ID</th>
                             <th>Actions</th>
@@ -122,10 +125,11 @@
                                 <td>${product.description}</td>
                                 <td>${product.price}</td>
                                 <td>${product.reducedPrice}</td>
+                                <td>${product.quantity}</td>
                                 <td><img src="${pageContext.request.contextPath}/${product.image}" alt="${product.name}" width="50"></td>
                                 <td>${product.categoryID}</td>
                                 <td>
-                                    <button class="btn btn-secondary" onclick="editProduct(${product.productID}, '${product.name}', '${product.description}', ${product.price}, ${product.reducedPrice}, '${product.image}', ${product.categoryID})">Edit</button>
+                                    <button class="btn btn-secondary" onclick="editProduct(${product.productID}, '${product.name}', '${product.description}', ${product.price}, ${product.reducedPrice}, ${product.quantity}, '${product.image}', ${product.categoryID})">Edit</button>
                                     <form action="${pageContext.request.contextPath}/admin/adminproducts" method="post" style="display:inline;">
                                         <input type="hidden" name="action" value="delete">
                                         <input type="hidden" name="productId" value="${product.productID}">
@@ -142,12 +146,13 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    function editProduct(id, name, description, price, reducedPrice, image, categoryID) {
+    function editProduct(id, name, description, price, reducedPrice, quantity, image, categoryID) {
         document.getElementById('editProductId').value = id;
         document.getElementById('editProductName').value = name;
         document.getElementById('editProductDescription').value = description;
         document.getElementById('editProductPrice').value = price;
         document.getElementById('editProductReducedPrice').value = reducedPrice;
+        document.getElementById('editProductQuantity').value = quantity;
         document.getElementById('editProductImage').src = '${pageContext.request.contextPath}/' + image;
         document.getElementById('editProductExistingImage').value = image;
         document.getElementById('editProductCategoryID').value = categoryID;

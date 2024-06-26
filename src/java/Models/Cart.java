@@ -10,11 +10,11 @@ package Models;
  */
 public class Cart extends Product {
 
-   private int cartID;
-   private int price;
-   private int quantity;
-   private int productID;
-   private int customerID;
+    private int cartID;
+    private int price;
+    private int quantity;
+    private int productID;
+    private int customerID;
 
     public Cart() {
     }
@@ -66,6 +66,5 @@ public class Cart extends Product {
     public void setCustomerID(int customerID) {
         this.customerID = customerID;
     }
-   
 
 }

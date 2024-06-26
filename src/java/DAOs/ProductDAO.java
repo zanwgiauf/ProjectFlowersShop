@@ -18,10 +18,15 @@ public class ProductDAO {
              PreparedStatement ps = conn.prepareStatement("SELECT * FROM Products")) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                products.add(new Product(rs.getInt("productID"), rs.getString("name"),
-                                         rs.getInt("price"), rs.getInt("reducedPrice"),
-                                         rs.getString("description"), rs.getString("image"),
-                                         rs.getInt("categoryID")));
+                products.add(new Product(
+                        rs.getInt("productID"), 
+                        rs.getString("name"), 
+                        rs.getInt("price"), 
+                        rs.getInt("reducedPrice"), 
+                        rs.getInt("quantity"), 
+                        rs.getString("description"), 
+                        rs.getString("image"), 
+                        rs.getInt("categoryID")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -31,13 +36,14 @@ public class ProductDAO {
 
     public void addProduct(Product product) {
         try (Connection conn = DBConnection.connect();
-             PreparedStatement ps = conn.prepareStatement("INSERT INTO Products (name, price, reducedPrice, description, image, categoryID) VALUES (?, ?, ?, ?, ?, ?)")) {
+             PreparedStatement ps = conn.prepareStatement("INSERT INTO Products (name, price, reducedPrice, quantity, description, image, categoryID) VALUES (?, ?, ?, ?, ?, ?, ?)")) {
             ps.setString(1, product.getName());
             ps.setInt(2, product.getPrice());
             ps.setInt(3, product.getReducedPrice());
-            ps.setString(4, product.getDescription());
-            ps.setString(5, product.getImage());
-            ps.setInt(6, product.getCategoryID());
+            ps.setInt(4, product.getQuantity());
+            ps.setString(5, product.getDescription());
+            ps.setString(6, product.getImage());
+            ps.setInt(7, product.getCategoryID());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -46,14 +52,15 @@ public class ProductDAO {
 
     public void updateProduct(Product product) {
         try (Connection conn = DBConnection.connect();
-             PreparedStatement ps = conn.prepareStatement("UPDATE Products SET name = ?, price = ?, reducedPrice = ?, description = ?, image = ?, categoryID = ? WHERE productID = ?")) {
+             PreparedStatement ps = conn.prepareStatement("UPDATE Products SET name = ?, price = ?, reducedPrice = ?, quantity = ?, description = ?, image = ?, categoryID = ? WHERE productID = ?")) {
             ps.setString(1, product.getName());
             ps.setInt(2, product.getPrice());
             ps.setInt(3, product.getReducedPrice());
-            ps.setString(4, product.getDescription());
-            ps.setString(5, product.getImage());
-            ps.setInt(6, product.getCategoryID());
-            ps.setInt(7, product.getProductID());
+            ps.setInt(4, product.getQuantity());
+            ps.setString(5, product.getDescription());
+            ps.setString(6, product.getImage());
+            ps.setInt(7, product.getCategoryID());
+            ps.setInt(8, product.getProductID());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -77,10 +84,15 @@ public class ProductDAO {
             ps.setInt(1, productID);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                product = new Product(rs.getInt("productID"), rs.getString("name"),
-                                      rs.getInt("price"), rs.getInt("reducedPrice"),
-                                      rs.getString("description"), rs.getString("image"),
-                                      rs.getInt("categoryID"));
+                product = new Product(
+                        rs.getInt("productID"), 
+                        rs.getString("name"), 
+                        rs.getInt("price"), 
+                        rs.getInt("reducedPrice"), 
+                        rs.getInt("quantity"), 
+                        rs.getString("description"), 
+                        rs.getString("image"), 
+                        rs.getInt("categoryID"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -95,10 +107,15 @@ public class ProductDAO {
             ps.setInt(1, categoryId);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Product product = new Product(rs.getInt("productID"), rs.getString("name"),
-                                              rs.getInt("price"), rs.getInt("reducedPrice"),
-                                              rs.getString("description"), rs.getString("image"),
-                                              rs.getInt("categoryID"));
+                Product product = new Product(
+                        rs.getInt("productID"), 
+                        rs.getString("name"), 
+                        rs.getInt("price"), 
+                        rs.getInt("reducedPrice"), 
+                        rs.getInt("quantity"), 
+                        rs.getString("description"), 
+                        rs.getString("image"), 
+                        rs.getInt("categoryID"));
                 products.add(product);
             }
         } catch (SQLException e) {

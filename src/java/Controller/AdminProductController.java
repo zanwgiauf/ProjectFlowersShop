@@ -14,9 +14,6 @@ import jakarta.servlet.http.Part;
 import DAOs.ProductDAO;
 import Models.Product;
 
-
-
-
 /**
  * Servlet điều khiển quản lý sản phẩm cho trang admin
  */
@@ -61,15 +58,17 @@ public class AdminProductController extends HttpServlet {
         String description = request.getParameter("description");
         int price = 0;
         int reducedPrice = 0;
+        int quantity = 0;
         int categoryID = 0;
         String image = "";
 
         try {
             price = Integer.parseInt(request.getParameter("price"));
             reducedPrice = Integer.parseInt(request.getParameter("reducedPrice"));
+            quantity = Integer.parseInt(request.getParameter("quantity"));
             categoryID = Integer.parseInt(request.getParameter("categoryID"));
         } catch (NumberFormatException e) {
-            // Handle exception if price or reducedPrice or categoryID is not valid integer
+            // Handle exception if price, reducedPrice, quantity, or categoryID is not a valid integer
         }
 
         // Handle file upload
@@ -85,7 +84,7 @@ public class AdminProductController extends HttpServlet {
             image = SAVE_DIR + "/" + fileName; // Update the image path
         }
 
-        Product product = new Product(0, name, price, reducedPrice, description, image, categoryID);
+        Product product = new Product(0, name, price, reducedPrice, quantity, description, image, categoryID);
         productDAO.addProduct(product);
         session.setAttribute("message", "Product added successfully.");
     }
@@ -97,15 +96,17 @@ public class AdminProductController extends HttpServlet {
         String description = request.getParameter("description");
         int price = 0;
         int reducedPrice = 0;
+        int quantity = 0;
         int categoryID = 0;
         String image = request.getParameter("existingImage");
 
         try {
             price = Integer.parseInt(request.getParameter("price"));
             reducedPrice = Integer.parseInt(request.getParameter("reducedPrice"));
+            quantity = Integer.parseInt(request.getParameter("quantity"));
             categoryID = Integer.parseInt(request.getParameter("categoryID"));
         } catch (NumberFormatException e) {
-            // Handle exception if price or reducedPrice or categoryID is not valid integer
+            // Handle exception if price, reducedPrice, quantity, or categoryID is not a valid integer
         }
 
         // Handle file upload
@@ -121,7 +122,7 @@ public class AdminProductController extends HttpServlet {
             image = SAVE_DIR + "/" + fileName; // Update the image path
         }
 
-        Product product = new Product(productId, name, price, reducedPrice, description, image, categoryID);
+        Product product = new Product(productId, name, price, reducedPrice, quantity, description, image, categoryID);
         productDAO.updateProduct(product);
         session.setAttribute("message", "Product updated successfully.");
     }
