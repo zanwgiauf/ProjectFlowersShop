@@ -77,6 +77,7 @@ public class AccountDAO {
         }
         return admin;
     }
+
     public Employee loginByEmployee(String email, String password) {
         Employee employee = null;
         try {
@@ -85,7 +86,7 @@ public class AccountDAO {
             ps.setString(2, getMd5(password));
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                employee = new Employee(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6),rs.getInt(7));
+                employee = new Employee(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(7));
             }
         } catch (SQLException ex) {
             Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -102,7 +103,7 @@ public class AccountDAO {
             ps.setString(2, getMd5(password));
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                customer = new Customer(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7),rs.getInt(8));
+                customer = new Customer(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getInt(8));
             }
             rs.close();
             ps.close();
@@ -129,4 +130,30 @@ public class AccountDAO {
         byte[] decodedBytes = Base64.getDecoder().decode(encoded);
         return new String(decodedBytes, StandardCharsets.UTF_8);
     }
+
+    public boolean registerCustomer(String fullName, String birthday, String phone, String email, String address, String password) {
+        try {
+            if (fullName == null || birthday == null || phone == null || email == null || address == null || password == null) {
+                return false;
+            }
+
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO Customers (fullName, birthday, phone, email, address, password, status) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            ps.setString(1, fullName);
+            ps.setDate(2, java.sql.Date.valueOf(birthday)); // Convert String to java.sql.Date
+            ps.setString(3, phone);
+            ps.setString(4, email);
+            ps.setString(5, address);
+            ps.setString(6, getMd5(password));
+            ps.setInt(7, 1); // Assuming status '1' means active
+
+            int rowsAffected = ps.executeUpdate();
+            ps.close();
+
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
+
