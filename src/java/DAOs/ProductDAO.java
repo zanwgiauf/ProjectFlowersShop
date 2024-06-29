@@ -123,4 +123,33 @@ public class ProductDAO {
         }
         return products;
     }
+
+    public List<Product> searchProducts(String keyword) {
+        List<Product> products = new ArrayList<>();
+        String sql = "SELECT * FROM Products WHERE name LIKE ? OR description LIKE ?";
+
+        try (Connection conn = DBConnection.connect();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            String searchKeyword = "%" + keyword + "%";
+            ps.setString(1, searchKeyword);
+            ps.setString(2, searchKeyword);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Product product = new Product(
+                        rs.getInt("productID"), 
+                        rs.getString("name"), 
+                        rs.getInt("price"), 
+                        rs.getInt("reducedPrice"), 
+                        rs.getInt("quantity"), 
+                        rs.getString("description"), 
+                        rs.getString("image"), 
+                        rs.getInt("categoryID"));
+                products.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return products;
+    }
 }
