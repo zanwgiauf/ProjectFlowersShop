@@ -12,18 +12,26 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>Flowers Shop</title>
-        <link rel="Website Icon" href="<%= request.getContextPath()%>/images/LogoF.png" type="image/png" />
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" />
-        <link rel="stylesheet" href="<%= request.getContextPath()%>/lib/bootstrap/bootstrap_css/bootstrap.min.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" />
+        <link rel="Website Icon" href="<%= request.getContextPath()%>/images/LogoF.png" type="png" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd" crossorigin="anonymous">
+        <style>
+            .position-fixed {
+                z-index: 1050; /* Ensure alert is above other content */
+            }
+            .top-50 {
+                top: 10%;
+            }
+            .start-50 {
+                left: 50%;
+            }
+            .translate-middle {
+                transform: translate(-50%, -50%);
+            }
+        </style>
 
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
-                integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"
-        defer></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
-                integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"
-        defer></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+
     </head>
 
     <body>
@@ -95,7 +103,7 @@
                                     data-bs-toggle="dropdown"><span><%= ad.decodeString(fullName) %></span></button>
                             <div class="dropdown-menu">
                                 <a href="#" class="dropdown-item">Profile</a>
-                                <a href="<%=request.getContextPath()%>/order" class="dropdown-item">View purchase history</a>
+                                <a href="<%=request.getContextPath()%>/order" class="dropdown-item">My purchases</a>
                                 <form class="dropdown-item " action="logout" method="post">
                                     <button class="btn btn-outline-dark" name="btnLogout" >Logout</button>
                                 </form>
@@ -108,6 +116,31 @@
                 </div>
             </nav>
         </header>
+        <script>
+            // Check for logout success attribute
+            <% if (session.getAttribute("logoutSuccess") != null && (boolean) session.getAttribute("logoutSuccess")) { %>
+            // Create alert element
+            var alertHtml = '<div id="logoutAlert" class="alert alert-success alert-dismissible fade show position-fixed top-50 start-50 translate-middle" role="alert">'
+                    + '<strong>You have been logged out successfully!</strong>'
+                    + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>'
+                    + '</div>';
+
+            // Append alert to the body
+            document.body.innerHTML += alertHtml;
+
+            // Automatically remove alert after 3 seconds
+            setTimeout(function () {
+                var logoutAlert = document.getElementById('logoutAlert');
+                if (logoutAlert) {
+                    logoutAlert.remove(); // Remove the alert from DOM
+                }
+            }, 3000);
+
+            // Remove logout success attribute to prevent repeated display
+            <% session.removeAttribute("logoutSuccess"); %>
+            <% } %>
+        </script>
+
 
         <main>
             <div class="container mt-5">
@@ -251,10 +284,5 @@
                 </div>
             </div>
         </footer>
-        <script src="<%= request.getContextPath()%>/lib/bootstrap/bootstrap_js/bootstrap.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
-                integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
-        crossorigin="anonymous"></script>
-
     </body>
 </html>

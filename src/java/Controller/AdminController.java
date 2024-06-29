@@ -4,12 +4,15 @@
  */
 package Controller;
 
+import DAOs.CustomerDAO;
+import Models.Customer;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  *
@@ -34,7 +37,7 @@ public class AdminController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AdminController</title>");            
+            out.println("<title>Servlet AdminController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet AdminController at " + request.getContextPath() + "</h1>");
@@ -53,12 +56,27 @@ public class AdminController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
+//    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+//            throws ServletException, IOException {
+//        String path = request.getRequestURI();
+//        PrintWriter out = response.getWriter();
+//        out.print(path);
+//        if (path.endsWith("/admin")) {
+//            request.getRequestDispatcher("./admin/adminHome.jsp").forward(request, response);
+//        } else if (path.endsWith("/admin/ManageAccountCustomer")) {
+//            CustomerDAO cusdao = new CustomerDAO();
+//            List<Customer> listCustomer = cusdao.getAllCustomer();
+//            request.setAttribute("listCustomer", listCustomer);
+//            request.getRequestDispatcher( "/admin/manageCustomer.jsp").forward(request, response);
+//        }
+//    }
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String path = request.getRequestURI();
-        if(path.endsWith("/admin")){
+        
+        if (path.endsWith("/admin")) {
             request.getRequestDispatcher("./admin/adminHome.jsp").forward(request, response);
-        }
+        } 
     }
 
     /**

@@ -28,6 +28,14 @@
         <servlet-name>CategoryController</servlet-name>
         <servlet-class>Controller.CategoryController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ManageUserAccountController</servlet-name>
+        <servlet-class>Controller.ManageUserAccountController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>OrderController</servlet-name>
+        <servlet-class>Controller.OrderController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/</url-pattern>
@@ -63,6 +71,14 @@
     <servlet-mapping>
         <servlet-name>CategoryController</servlet-name>
         <url-pattern>/category</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageUserAccountController</servlet-name>
+        <url-pattern>/manageUserAccount</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderController</servlet-name>
+        <url-pattern>/order</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

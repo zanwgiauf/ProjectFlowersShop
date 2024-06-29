@@ -95,6 +95,8 @@
                 </div>
             </nav>
         </header>
+        
+
         <%
             String check = "";
             if (session.getAttribute("checkLoginMess") != null) {

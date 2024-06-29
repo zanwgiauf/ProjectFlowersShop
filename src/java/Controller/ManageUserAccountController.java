@@ -4,21 +4,21 @@
  */
 package Controller;
 
+import DAOs.CustomerDAO;
+import Models.Customer;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.util.Enumeration;
+import java.util.List;
 
 /**
  *
- * @author giaun
+ * @author Nguyen Van Giau - CE170449
  */
-public class LogoutController extends HttpServlet {
+public class ManageUserAccountController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,10 +37,10 @@ public class LogoutController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LogoutController</title>");
+            out.println("<title>Servlet ManageUserAccountController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LogoutController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ManageUserAccountController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -58,7 +58,13 @@ public class LogoutController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher(request.getContextPath() + "/");
+        String path = request.getRequestURI();
+        if (path.endsWith("/manageUserAccount")) {
+            CustomerDAO cusdao = new CustomerDAO();
+            List<Customer> listCustomer = cusdao.getAllCustomer();
+            request.setAttribute("listCustomer", listCustomer);
+            request.getRequestDispatcher("/admin/manageCustomer.jsp").forward(request, response);
+        }
     }
 
     /**
@@ -72,33 +78,17 @@ public class LogoutController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String action = request.getParameter("action");
+        int customerID = Integer.parseInt(request.getParameter("customerID"));
+        CustomerDAO customerDAO = new CustomerDAO();
 
-        if (request.getParameter("btnLogout") != null) {
-            // Clear cookies
-            Cookie[] cookies = request.getCookies();
-            if (cookies != null) {
-                for (Cookie cookie : cookies) {
-                    cookie.setMaxAge(0);
-                    response.addCookie(cookie);
-                }
-            }
-
-            // Invalidate session
-            HttpSession session = request.getSession(false); // Get existing session if exists
-            if (session != null) {
-                try {
-                    session.invalidate(); // Invalidate the session
-                    // Set logout success attribute (not recommended after invalidate, but keeping for illustration)
-                    request.getSession().setAttribute("logoutSuccess", true);
-                } catch (IllegalStateException e) {
-                    // Handle exception if session is already invalidated
-                    System.out.println(e); // Log or handle as needed
-                }
-            }
-
-            // Redirect to home page
-            response.sendRedirect(request.getContextPath() + "/");
+        if ("block".equals(action)) {
+            customerDAO.blockCustomerAccount(customerID);
+        } else if ("unblock".equals(action)) {
+            customerDAO.unBlockCustomerAccount(customerID);
         }
+
+        response.sendRedirect(request.getContextPath() + "/manageUserAccount"); // redirect back to the management page
     }
 
     /**
