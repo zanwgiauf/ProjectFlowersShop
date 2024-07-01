@@ -75,6 +75,7 @@ public class Order {
     }
 
     public void setDateCreate(Date dateCreate) {
+
         this.dateCreate = dateCreate;
     }
 
@@ -131,6 +132,7 @@ public class Order {
     }
 
     public void setPaymentCreateAt(Date paymentCreateAt) {
+
         this.paymentCreateAt = paymentCreateAt;
     }
 
@@ -173,7 +175,5 @@ public class Order {
     public void setOrderDetails(List<OrderDetail> orderDetails) {
         this.orderDetails = orderDetails;
     }
-
-    
 
 }

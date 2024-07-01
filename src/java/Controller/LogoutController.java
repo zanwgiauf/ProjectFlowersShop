@@ -12,7 +12,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.Enumeration;
 
 /**
  *
@@ -74,8 +73,10 @@ public class LogoutController extends HttpServlet {
             throws ServletException, IOException {
 
         if (request.getParameter("btnLogout") != null) {
+
             // Clear cookies
             Cookie[] cookies = request.getCookies();
+
             if (cookies != null) {
                 for (Cookie cookie : cookies) {
                     cookie.setMaxAge(0);
@@ -95,7 +96,6 @@ public class LogoutController extends HttpServlet {
                     System.out.println(e); // Log or handle as needed
                 }
             }
-
             // Redirect to home page
             response.sendRedirect(request.getContextPath() + "/");
         }

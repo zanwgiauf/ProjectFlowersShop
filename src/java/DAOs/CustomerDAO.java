@@ -4,6 +4,7 @@
  */
 package DAOs;
 
+
 import DBConnect.DBConnection;
 import Models.Customer;
 import java.sql.Connection;
@@ -105,4 +106,55 @@ public class CustomerDAO {
         return list;
     }
 
+    public boolean isEmailRegistered(String email) {
+        String sql = "SELECT COUNT(*) FROM Customers WHERE email = ?";
+        try ( Connection conn = DBConnection.connect();  PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public void saveResetToken(String email, String token) {
+        String sql = "UPDATE Customers SET reset_token = ? WHERE email = ?";
+        try ( Connection conn = DBConnection.connect();  PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, token);
+            ps.setString(2, email);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean verifyResetToken(String email, String token) {
+        String sql = "SELECT COUNT(*) FROM Customers WHERE email = ? AND reset_token = ?";
+        try ( Connection conn = DBConnection.connect();  PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, email);
+            ps.setString(2, token);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public void updatePassword(String email, String newPassword) {
+        String sql = "UPDATE Customers SET password = ?, reset_token = NULL WHERE email = ?";
+        try ( Connection conn = DBConnection.connect();  PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, newPassword);
+            ps.setString(2, email);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+    }
 }

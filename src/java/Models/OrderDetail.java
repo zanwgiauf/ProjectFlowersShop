@@ -44,8 +44,6 @@ public class OrderDetail {
         this.dateCreate = dateCreate;
     }
 
-    
-
     public int getDetailID() {
         return detailID;
     }

@@ -28,6 +28,7 @@ public class AccountDAO {
     Connection conn;
 
     public AccountDAO() {
+
         try {
             conn = DBConnection.connect();
             if (conn != null) {
@@ -37,6 +38,7 @@ public class AccountDAO {
             }
         } catch (SQLException ex) {
             Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+
         }
     }
 
@@ -85,11 +87,13 @@ public class AccountDAO {
         Employee employee = null;
         try {
             PreparedStatement ps = conn.prepareStatement("select * from Employees where email = ? and password = ? and status = 1");
+
             ps.setString(1, email);
             ps.setString(2, getMd5(password));
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                employee = new Employee(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(1));
+
+                employee = new Employee(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(7));
             }
         } catch (SQLException ex) {
             Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -102,11 +106,13 @@ public class AccountDAO {
 
         try {
             PreparedStatement ps = conn.prepareStatement("select * from Customers where email = ? and password = ? and status = 1");
+
             ps.setString(1, email);
             ps.setString(2, getMd5(password));
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                customer = new Customer(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getInt(1));
+
+                customer = new Customer(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getInt(8));
             }
             rs.close();
             ps.close();
@@ -138,6 +144,4 @@ public class AccountDAO {
             return null;
         }
     }
-
-    
 }
