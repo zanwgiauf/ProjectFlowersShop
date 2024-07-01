@@ -92,18 +92,15 @@
                                 if ("success".equals(registrationStatus)) {
                             %>
                             <div class="alert alert-success" role="alert">
-                                Registration successful! You can now <a href="<%=request.getContextPath() %>/LoginController" class="alert-link">login</a>.
+                                <p>Registration successful! You can log in now.</p>
+                                <p>If this is your first time registering, click 
+                                    <a href="<%=request.getContextPath() %>/login" class="alert-link" style="color: blue;">here</a> 
+                                    to log in.
+                                </p>
                             </div>
-                            <%
-                                } else if ("error".equals(registrationStatus)) {
+                            <% 
+                                } else { 
                             %>
-                            <div class="alert alert-danger" role="alert">
-                                Registration failed! Please try again.
-                            </div>
-                            <%
-                                }
-                            %>
-
                             <form method="post" action="RegisterController" onsubmit="return validateForm();">
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="yourName">Your Name</label>
@@ -138,6 +135,9 @@
                                 </div>
                                 <p class="text-center text-muted mt-5 mb-0">Have already an account? <a href="<%=request.getContextPath() %>/login" class="text-info"><u>Login here</u></a></p>
                             </form>
+                            <% 
+                                } 
+                            %>
                         </div>
                     </div>
                 </div>
@@ -179,7 +179,6 @@
                 </div>
             </div>
         </footer>
-
         <script src="<%= request.getContextPath()%>/lib/bootstrap/bootstrap_js/bootstrap.min.js"></script>
         <script src="<%= request.getContextPath()%>/sang/js/vendor/jquery-2.2.4.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
