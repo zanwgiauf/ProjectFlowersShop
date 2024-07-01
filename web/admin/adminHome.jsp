@@ -99,7 +99,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
+                                <a class="nav-link" href="<%= request.getContextPath()%>/StatisticsServlet">
                                     <i class="bi bi-graph-up"></i>
                                     Analytic
                                 </a>
@@ -110,7 +110,7 @@
                                     <span>Manage User Accounts</span>
                                 </a>
                                 <div class="collapse ms-3" id="manageUserAccounts">
-                                    <a href="#" class="dropdown-item">Manage Employee Accounts</a>
+                                    <a href="<%= request.getContextPath()%>/admin/employee-management" class="dropdown-item">Manage Employee Accounts</a>
                                     <a href="#" class="dropdown-item">Manage Customer Accounts</a>
                                 </div>
                             </li>
