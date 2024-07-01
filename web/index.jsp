@@ -102,7 +102,7 @@
                         <span><%= ad.decodeString(fullName) %></span>
                     </button>
                     <div class="dropdown-menu">
-                        <a href="#" class="dropdown-item">Profile</a>
+                        <a href="<%=request.getContextPath()%>/profile" class="dropdown-item">Profile</a>
                         <a href="#" class="dropdown-item">View purchase history</a>
                         <form class="dropdown-item" action="LogoutController" method="post">
                             <button class="btn btn-outline-dark" name="btnLogout">Logout</button>
