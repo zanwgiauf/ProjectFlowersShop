@@ -27,6 +27,18 @@ public class Cart extends Product {
         this.customerID = customerID;
     }
 
+        public Cart(int CartID, int Price, int Quantity, String Image, int Total, int ProductID, int CustomerID, Product product, String Name) {
+        this.CartID = CartID;
+        this.Price = Price;
+        this.Quantity = Quantity;
+        this.Image = Image;
+        this.Total = Total;
+        this.ProductID = ProductID;
+        this.CustomerID = CustomerID;
+        this.product = product;
+        this.Name = Name;
+    }
+
     public int getCartID() {
         return cartID;
     }
