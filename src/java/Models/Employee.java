@@ -31,6 +31,36 @@ public class Employee {
         this.roleID = roleID;
     }
 
+        public Employee(int EmployeeID, String FullName, String Phone, String Email, String Password, int RoleID, String roleName) {
+        this.EmployeeID = EmployeeID;
+        this.FullName = FullName;
+        this.Phone = Phone;
+        this.Email = Email;
+        this.Password = Password;
+        this.RoleID = RoleID;
+        this.roleName = roleName;
+    }
+
+    public Employee(int EmployeeID, String FullName, String Phone, String Email, String Password, int RoleID, String roleName, int status) {
+        this.EmployeeID = EmployeeID;
+        this.FullName = FullName;
+        this.Phone = Phone;
+        this.Email = Email;
+        this.Password = Password;
+        this.RoleID = RoleID;
+        this.roleName = roleName;
+        this.status = status;
+    }
+    public Employee(int EmployeeID, String FullName, String Phone, String Email, String Password, int RoleID,  int status) {
+        this.EmployeeID = EmployeeID;
+        this.FullName = FullName;
+        this.Phone = Phone;
+        this.Email = Email;
+        this.Password = Password;
+        this.RoleID = RoleID;
+        this.status = status;
+    }
+
     public int getEmployeeID() {
         return employeeID;
     }
@@ -85,6 +115,15 @@ public class Employee {
 
     public void setRoleID(int roleID) {
         this.roleID = roleID;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" + "EmployeeID=" + EmployeeID + ", FullName=" + FullName + ", Phone=" + Phone + ", Email=" + Email + ", Password=" + Password + ", RoleID=" + RoleID + ", roleName=" + roleName + ", status=" + status + '}';
+    }
+
+    public boolean isLocked() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }
