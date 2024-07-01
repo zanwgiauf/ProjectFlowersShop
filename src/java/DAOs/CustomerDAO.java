@@ -9,6 +9,7 @@ package DAOs;
  * @author AN515-57
  */
 import DBConnect.DBConnection;
+import Models.Customer;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -65,6 +66,45 @@ public class CustomerDAO {
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, newPassword);
             ps.setString(2, email);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public Customer getCustomerById(int customerID) {
+        String sql = "SELECT * FROM Customers WHERE customerID = ?";
+        try ( Connection conn = DBConnection.connect();  PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, customerID);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return new Customer(
+                        rs.getInt("customerID"),
+                        rs.getString("fullName"),
+                        rs.getString("birthday"),
+                        rs.getString("phone"),
+                        rs.getString("email"),
+                        rs.getString("address"),
+                        rs.getString("password"),
+                        rs.getInt("status")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void updateCustomer(Customer customer) {
+        String sql = "UPDATE Customers SET fullName = ?, birthday = ?, phone = ?, email = ?, address = ? WHERE customerID = ?";
+        try ( Connection conn = DBConnection.connect();  PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, customer.getFullName());
+            // Assuming birthday is a String in format yyyy-MM-dd
+            ps.setDate(2, java.sql.Date.valueOf(customer.getBirthday()));
+            ps.setString(3, customer.getPhone());
+            ps.setString(4, customer.getEmail());
+            ps.setString(5, customer.getAddress());
+            ps.setInt(6, customer.getCustomerID());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
