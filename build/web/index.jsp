@@ -18,9 +18,9 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd" crossorigin="anonymous">
         <style>
             .position-fixed {
-                z-index: 1050; /* Ensure alert is above other content */
+                z-index: 1050; 
             }
-            .top-50 {
+            .top-25 {
                 top: 10%;
             }
             .start-50 {
@@ -39,7 +39,7 @@
             <nav class="container position-relative fixed-top" style="background-color:#7b88a8; border-radius:16px;">
                 <div class="row d-flex justify-content-center align-items-center">
                     <div class="col-lg-2 col-4 d-md-flex align-items-center justify-content-center">
-                        <a href="<%=request.getContextPath()%>/" class="text-white d-flex align-items-center">
+                        <a href="<%=request.getContextPath()%>/" class="text-white d-flex align-items-center text-decoration-none">
                             <img src="./images/LogoF.png" width="70px" alt="logo" />
                             <span class="ms-2">Flower Shop</span>
                         </a>
@@ -85,7 +85,7 @@
                     <div class="col-lg-3 col-7 align-items-center">
                         <form action="ProductController" method="post" class="d-flex align-items-center">
                             <input class="w-75 form-control rounded-pill bg-light" type="text" name="search" placeholder="Search" />
-                            <button class="btn rounded-pill bg-light py-2" type="submit" name="btn-search">
+                            <button class="btn rounded-pill bg-light py-2 px-4 ms-2" type="submit" name="btn-search">
                                 <i class="bi bi-search"></i>
                             </button>
                         </form>
@@ -103,7 +103,7 @@
                                     data-bs-toggle="dropdown"><span><%= ad.decodeString(fullName) %></span></button>
                             <div class="dropdown-menu">
                                 <a href="#" class="dropdown-item">Profile</a>
-                                <a href="<%=request.getContextPath()%>/order" class="dropdown-item">My purchases</a>
+                                <a href="<%=request.getContextPath()%>/purchaseHistory?customerID=<%=customerID%>" class="dropdown-item">My purchases</a>
                                 <form class="dropdown-item " action="logout" method="post">
                                     <button class="btn btn-outline-dark" name="btnLogout" >Logout</button>
                                 </form>
@@ -120,7 +120,7 @@
             // Check for logout success attribute
             <% if (session.getAttribute("logoutSuccess") != null && (boolean) session.getAttribute("logoutSuccess")) { %>
             // Create alert element
-            var alertHtml = '<div id="logoutAlert" class="alert alert-success alert-dismissible fade show position-fixed top-50 start-50 translate-middle" role="alert">'
+            var alertHtml = '<div id="logoutAlert" class="alert alert-success alert-dismissible fade show position-fixed top-25 start-50 translate-middle mt-3" role="alert">'
                     + '<strong>You have been logged out successfully!</strong>'
                     + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>'
                     + '</div>';

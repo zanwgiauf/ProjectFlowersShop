@@ -18,17 +18,19 @@ public class Promotion {
     private String discount;
     private String startDate;
     private String endDate;
+    private int OrderID;
 
     public Promotion() {
     }
 
-    public Promotion(int promotionID, String promotionCode, String description, String discount, String startDate, String endDate) {
+    public Promotion(int promotionID, String promotionCode, String description, String discount, String startDate, String endDate, int OrderID) {
         this.promotionID = promotionID;
         this.promotionCode = promotionCode;
         this.description = description;
         this.discount = discount;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.OrderID = OrderID;
     }
 
     public int getPromotionID() {
@@ -77,6 +79,14 @@ public class Promotion {
 
     public void setEndDate(String endDate) {
         this.endDate = endDate;
+    }
+
+    public int getOrderID() {
+        return OrderID;
+    }
+
+    public void setOrderID(int OrderID) {
+        this.OrderID = OrderID;
     }
 
 }

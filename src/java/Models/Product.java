@@ -13,6 +13,7 @@ public class Product {
     private int productID;
     private String name;
     private int price;
+    private int reducedPrice;
     private int quantity;
     private String description;
     private String image;
@@ -21,10 +22,11 @@ public class Product {
     public Product() {
     }
 
-    public Product(int productID, String name, int price, int quantity, String description, String image, int categoryID) {
+    public Product(int productID, String name, int price, int reducedPrice, int quantity, String description, String image, int categoryID) {
         this.productID = productID;
         this.name = name;
         this.price = price;
+        this.reducedPrice = reducedPrice;
         this.quantity = quantity;
         this.description = description;
         this.image = image;
@@ -53,6 +55,14 @@ public class Product {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public int getReducedPrice() {
+        return reducedPrice;
+    }
+
+    public void setReducedPrice(int reducedPrice) {
+        this.reducedPrice = reducedPrice;
     }
 
     public int getQuantity() {
@@ -86,4 +96,5 @@ public class Product {
     public void setCategoryID(int categoryID) {
         this.categoryID = categoryID;
     }
+
 }

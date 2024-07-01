@@ -81,4 +81,28 @@ public class CustomerDAO {
         }
     }
 
+    public List<Customer> searchCustomers(String keyword) {
+        List<Customer> list = new ArrayList<>();
+        String sql = "SELECT * FROM Customers WHERE email IS NOT NULL AND (fullName LIKE ? OR phone LIKE ? OR email LIKE ?)";
+
+        // Check if the keyword is a number and must be exactly 4 digits
+        if (keyword.matches("\\d+") && keyword.length() != 10) {
+            return list; // Return an empty list
+        }
+
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+            String query = "%" + keyword + "%";
+            ps.setString(1, query);
+            ps.setString(2, query);
+            ps.setString(3, query);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Customer(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getInt(8)));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
 }

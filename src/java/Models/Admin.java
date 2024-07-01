@@ -9,6 +9,7 @@ package Models;
  * @author Nguyen Van Giau - CE170449
  */
 public class Admin {
+
     private int adminID;
     private String fullName;
     private String phone;
@@ -75,6 +76,5 @@ public class Admin {
     public void setRoleID(int roleID) {
         this.roleID = roleID;
     }
-    
-    
+
 }

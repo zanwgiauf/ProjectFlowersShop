@@ -5,12 +5,13 @@
 package Models;
 
 import java.sql.Date;
+import java.util.List;
 
 /**
  *
  * @author Nguyen Van Giau - CE170449
  */
-public class Order  {
+public class Order {
 
     private int OrderID;
     private Date dateCreate;
@@ -23,10 +24,12 @@ public class Order  {
     private Date paymentCreateAt;
     private int customerID;
     private int employeeID;
-    
+    private String image;
+    private String name;
+    private List<OrderDetail> orderDetails;
 
     public Order() {
-       
+
     }
 
     public Order(int OrderID, Date dateCreate, String phone, String address, int totalPrice, String note, int status, int paymentStatus, Date paymentCreateAt, int customerID, int employeeID) {
@@ -42,7 +45,22 @@ public class Order  {
         this.customerID = customerID;
         this.employeeID = employeeID;
     }
-    
+
+    public Order(int OrderID, Date dateCreate, String phone, String address, int totalPrice, String note, int status, int paymentStatus, Date paymentCreateAt, int customerID, int employeeID, String image, String name) {
+        this.OrderID = OrderID;
+        this.dateCreate = dateCreate;
+        this.phone = phone;
+        this.address = address;
+        this.totalPrice = totalPrice;
+        this.note = note;
+        this.status = status;
+        this.paymentStatus = paymentStatus;
+        this.paymentCreateAt = paymentCreateAt;
+        this.customerID = customerID;
+        this.employeeID = employeeID;
+        this.image = image;
+        this.name = name;
+    }
 
     public int getOrderID() {
         return OrderID;
@@ -132,5 +150,30 @@ public class Order  {
         this.employeeID = employeeID;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<OrderDetail> getOrderDetails() {
+        return orderDetails;
+    }
+
+    public void setOrderDetails(List<OrderDetail> orderDetails) {
+        this.orderDetails = orderDetails;
+    }
+
     
+
 }

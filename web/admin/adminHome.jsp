@@ -57,6 +57,9 @@
                     }
                 }
             }
+            if(cookies == null){
+                response.sendRedirect(request.getContextPath()+ "/");
+            }
             AccountDAO ad = new AccountDAO();  
         %>
         <div class="container-fluid">
@@ -118,8 +121,8 @@
                                 </a>
                             </li>
                         </ul>
-                        <form action="logout" method="post" class="mt-4 me-2">
-                            <button class="btn btn-outline-dark" style="border-radius: 16px" name="btnLogout">Logout</button>
+                        <form action="logout" method="post" class="mt-3 d-flex justify-content-center align-items-center">
+                            <button class="btn btn-outline-dark px-5" style="border-radius: 16px" name="btnLogout">Logout</button>
                         </form>
                     </div>
                 </nav>

@@ -9,22 +9,25 @@ package Models;
  * @author Nguyen Van Giau - CE170449
  */
 public class Employee {
+
     private int employeeID;
     private String fullName;
     private String phone;
     private String email;
     private String password;
+    private int status;
     private int roleID;
 
     public Employee() {
     }
 
-    public Employee(int employeeID, String fullName, String phone, String email, String password, int roleID) {
+    public Employee(int employeeID, String fullName, String phone, String email, String password, int status, int roleID) {
         this.employeeID = employeeID;
         this.fullName = fullName;
         this.phone = phone;
         this.email = email;
         this.password = password;
+        this.status = status;
         this.roleID = roleID;
     }
 
@@ -68,6 +71,14 @@ public class Employee {
         this.password = password;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     public int getRoleID() {
         return roleID;
     }
@@ -76,5 +87,4 @@ public class Employee {
         this.roleID = roleID;
     }
 
-   
 }

@@ -4,6 +4,8 @@
  */
 package Models;
 
+import java.sql.Date;
+
 /**
  *
  * @author Nguyen Van Giau - CE170449
@@ -16,6 +18,8 @@ public class OrderDetail {
     private int quantity;
     private int orderID;
     private int productID;
+    private String image;
+    private Date dateCreate;
 
     public OrderDetail() {
     }
@@ -28,6 +32,19 @@ public class OrderDetail {
         this.orderID = orderID;
         this.productID = productID;
     }
+
+    public OrderDetail(int detailID, String name, int price, int quantity, int orderID, int productID, String image, Date dateCreate) {
+        this.detailID = detailID;
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+        this.orderID = orderID;
+        this.productID = productID;
+        this.image = image;
+        this.dateCreate = dateCreate;
+    }
+
+    
 
     public int getDetailID() {
         return detailID;
@@ -75,6 +92,22 @@ public class OrderDetail {
 
     public void setProductID(int productID) {
         this.productID = productID;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public Date getDateCreate() {
+        return dateCreate;
+    }
+
+    public void setDateCreate(Date dateCreate) {
+        this.dateCreate = dateCreate;
     }
 
 }

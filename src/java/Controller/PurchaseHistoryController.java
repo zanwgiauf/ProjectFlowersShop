@@ -4,21 +4,23 @@
  */
 package Controller;
 
-import DAOs.CustomerDAO;
-import Models.Customer;
+import DAOs.PurchaseHistoryDAO;
+import Models.Order;
+import Models.OrderDetail;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
  *
  * @author Nguyen Van Giau - CE170449
  */
-public class ManageUserAccountController extends HttpServlet {
+public class PurchaseHistoryController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,10 +39,10 @@ public class ManageUserAccountController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ManageUserAccountController</title>");
+            out.println("<title>Servlet PurchaseHistoryController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ManageUserAccountController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet PurchaseHistoryController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -58,18 +60,17 @@ public class ManageUserAccountController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        CustomerDAO cusdao = new CustomerDAO();
-        List<Customer> listCustomer;
-        String search = request.getParameter("search");
-
-        if (search != null && !search.trim().isEmpty()) {
-            listCustomer = cusdao.searchCustomers(search.trim());
-        } else {
-            listCustomer = cusdao.getAllCustomer();
+        PurchaseHistoryDAO phdao = new PurchaseHistoryDAO();
+        String cid = request.getParameter("customerID");
+        int id;
+        try {
+            id = Integer.parseInt(cid);
+            List<OrderDetail> orders = phdao.getOrderDetailsByCustomerID(id); 
+            request.setAttribute("orderDetails", orders);
+            request.getRequestDispatcher("./customer/purchaseHistory.jsp").forward(request, response);
+        } catch (NumberFormatException | SQLException ex) {
+            throw new ServletException("Error retrieving orders", ex);
         }
-
-        request.setAttribute("listCustomer", listCustomer);
-        request.getRequestDispatcher("/admin/manageCustomer.jsp").forward(request, response);
     }
 
     /**
@@ -83,17 +84,7 @@ public class ManageUserAccountController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String action = request.getParameter("action");
-        int customerID = Integer.parseInt(request.getParameter("customerID"));
-        CustomerDAO customerDAO = new CustomerDAO();
-
-        if ("block".equals(action)) {
-            customerDAO.blockCustomerAccount(customerID);
-        } else if ("unblock".equals(action)) {
-            customerDAO.unBlockCustomerAccount(customerID);
-        }
-
-        response.sendRedirect(request.getContextPath() + "/manageUserAccount");
+        processRequest(request, response);
     }
 
     /**

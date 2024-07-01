@@ -36,6 +36,14 @@
         <servlet-name>OrderController</servlet-name>
         <servlet-class>Controller.OrderController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>purchaseHistory</servlet-name>
+        <servlet-class>Controller.PurchaseHistoryController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PendingOrdersController</servlet-name>
+        <servlet-class>Controller.PendingOrdersController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/</url-pattern>
@@ -79,6 +87,14 @@
     <servlet-mapping>
         <servlet-name>OrderController</servlet-name>
         <url-pattern>/order</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>purchaseHistory</servlet-name>
+        <url-pattern>/purchaseHistory</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PendingOrdersController</servlet-name>
+        <url-pattern>/pendingOrders</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
