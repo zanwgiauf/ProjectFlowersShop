@@ -50,14 +50,15 @@
                     <span class="ms-2">Flower Shop</span>
                 </a>
             </div>
-            <div class="col-lg-4  d-none d-lg-flex justify-content-start align-items-center">
-                <ul class="nav d-lg-flex ">
-                    <li class="nav-item"><a class="nav-link text-white" href="<%=request.getContextPath()%>/">Home</a></li>
-                    <li class="nav-item"><a class="nav-link text-white" href="#">Category</a></li>
-                    <li class="nav-item"><a class="nav-link text-white" href="#">Introduce</a></li>
-                    <li class="nav-item"><a class="nav-link text-white" href="#">Contact</a></li>
-                </ul>
-            </div>
+                               <div class="col-md-5  d-none d-lg-flex justify-content-start align-items-center">
+                        <ul class="nav d-lg-flex">
+                            <li class="nav-item"><a class="nav-link text-white" href="<%=request.getContextPath()%>/">Home</a></li>
+                            <li class="nav-item"><a class="nav-link text-white" href="<%=request.getContextPath()%>/categories">Category</a></li>
+                            <li class="nav-item"><a class="nav-link text-white" href="<%=request.getContextPath()%>/about">Introduce</a></li>
+                            <li class="nav-item"><a class="nav-link text-white" href="<%=request.getContextPath()%>/contact">Contact</a></li>               
+                            <li class="nav-item"><a class="nav-link text-white" href="<%=request.getContextPath()%>/promotionsview">Promotions</a></li>
+                        </ul>
+                    </div>
             <%
             String fullName = "";
             int customerID = 0;
