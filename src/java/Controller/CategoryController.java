@@ -60,7 +60,7 @@ public class CategoryController extends HttpServlet {
             int start, end;
             start = (page - 1) * numperpage;
             end = Math.min(page * numperpage, size);
-            List<Product> product = p.getListByPage(productList, start, end);
+            List<Product> product = c.getListByPage(productList, start, end);
             request.setAttribute("page", page);
             request.setAttribute("num", num);
             request.setAttribute("CategoryData", category);
@@ -79,7 +79,7 @@ public class CategoryController extends HttpServlet {
                     int category_id1 = Integer.parseInt(category_id);
                     ProductDAO p = new ProductDAO();
                     CategoryDAO c = new CategoryDAO();
-                    List<Product> productList = p.getProductByCategory(category_id1);
+                    List<Product> productList = c.getProductByCategory(category_id1);
                     List<Category> category = c.getAllCategories();
                     int page, numperpage = 9;
                     int size = productList.size();
@@ -93,7 +93,7 @@ public class CategoryController extends HttpServlet {
                     int start, end;
                     start = (page - 1) * numperpage;
                     end = Math.min(page * numperpage, size);
-                    List<Product> product = p.getListByPage(productList, start, end);
+                    List<Product> product = c.getListByPage(productList, start, end);
                     request.setAttribute("page", page);
                     request.setAttribute("num", num);
                     request.setAttribute("CategoryData", category);
@@ -116,11 +116,11 @@ public class CategoryController extends HttpServlet {
                 List<Product> productList = null;
 
                 if (type.equals("low")) {
-                    productList = p.getProductLow();
+                    productList = c.getProductLow();
                 } else if (type.equals("high")) {
-                    productList = p.getProductHigh();
+                    productList = c.getProductHigh();
                 } else if (type.equals("a-z")) {
-                    productList = p.getProductAZ();
+                    productList = c.getProductAZ();
                 }
 
                 if (productList != null) {
@@ -139,7 +139,7 @@ public class CategoryController extends HttpServlet {
                     int start, end;
                     start = (page - 1) * numperpage;
                     end = Math.min(page * numperpage, size);
-                    List<Product> product = p.getListByPage(productList, start, end);
+                    List<Product> product = c.getListByPage(productList, start, end);
                     System.out.println("Products on page " + page + ": " + product.size());
 
                     request.setAttribute("page", page);
@@ -162,7 +162,7 @@ public class CategoryController extends HttpServlet {
 
                 ProductDAO p = new ProductDAO();
                 CategoryDAO c = new CategoryDAO();
-                List<Product> productList = p.SearchAll(text);
+                List<Product> productList = c.SearchAll(text);
                 System.out.println("Number of products found: " + productList.size());
 
                 List<Category> category = c.getAllCategories();
@@ -180,7 +180,7 @@ public class CategoryController extends HttpServlet {
                 int start, end;
                 start = (page - 1) * numperpage;
                 end = Math.min(page * numperpage, size);
-                List<Product> product = p.getListByPage(productList, start, end);
+                List<Product> product = c.getListByPage(productList, start, end);
                 System.out.println("Products on page " + page + ": " + product.size());
 
                 request.setAttribute("page", page);
