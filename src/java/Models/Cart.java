@@ -10,61 +10,124 @@ package Models;
  */
 public class Cart extends Product {
 
-    private int cartID;
-    private int price;
-    private int quantity;
-    private int productID;
-    private int customerID;
+    private int CartID;
+    private int Price;
+    private int Quantity;
+    private String Image;
+    private int Total;
+    private int ProductID;
+    private int CustomerID;
+    private Product product;
+    private String Name;
 
     public Cart() {
     }
 
-    public Cart(int cartID, int price, int quantity, int productID, int customerID) {
-        this.cartID = cartID;
-        this.price = price;
-        this.quantity = quantity;
-        this.productID = productID;
-        this.customerID = customerID;
+    public Cart(int CartID, int Price, int Quantity, String Image, int Total, int ProductID, int CustomerID, String Name) {
+        super();
+        this.CartID = CartID;
+        this.Price = Price * Quantity;
+        this.Quantity = Quantity;
+        this.Image = Image;
+        this.Total = Total;
+        this.ProductID = ProductID;
+        this.CustomerID = CustomerID;
+        this.Name = Name;
+
+    }
+
+    public Cart(int CartID, int Price, int Quantity, String Image, int Total, int ProductID, int CustomerID, Product product, String Name) {
+        this.CartID = CartID;
+        this.Price = Price;
+        this.Quantity = Quantity;
+        this.Image = Image;
+        this.Total = Total;
+        this.ProductID = ProductID;
+        this.CustomerID = CustomerID;
+        this.product = product;
+        this.Name = Name;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public int getCartID() {
-        return cartID;
+        return CartID;
     }
 
-    public void setCartID(int cartID) {
-        this.cartID = cartID;
+    public void setCartID(int CartID) {
+        this.CartID = CartID;
     }
 
+    @Override
     public int getPrice() {
-        return price;
+        return Price;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
+    @Override
+    public void setPrice(int Price) {
+        this.Price = Price;
     }
 
+    @Override
     public int getQuantity() {
-        return quantity;
+        return Quantity;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    @Override
+    public void setQuantity(int Quantity) {
+        this.Quantity = Quantity;
     }
 
+    @Override
+    public String getImage() {
+        return Image;
+    }
+
+    @Override
+    public void setImage(String Image) {
+        this.Image = Image;
+    }
+
+    public int getTotal() {
+        return Total;
+    }
+
+    public void setTotal(int Total) {
+        this.Total = Total;
+    }
+
+    @Override
     public int getProductID() {
-        return productID;
+        return ProductID;
     }
 
-    public void setProductID(int productID) {
-        this.productID = productID;
+    @Override
+    public void setProductID(int ProductID) {
+        this.ProductID = ProductID;
     }
 
     public int getCustomerID() {
-        return customerID;
+        return CustomerID;
     }
 
-    public void setCustomerID(int customerID) {
-        this.customerID = customerID;
+    public void setCustomerID(int CustomerID) {
+        this.CustomerID = CustomerID;
+    }
+
+    @Override
+    public String getName() {
+        return Name;
+    }
+
+    @Override
+    public void setName(String Name) {
+        this.Name = Name;
     }
 
 }

@@ -17,6 +17,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
+
 
 /**
  *
@@ -47,9 +49,16 @@ public class EmployeeManagement extends HttpServlet {
             } else {
                 employees = employeeDAO.getAllEmployeeWithParam("");
             }
+//            List<Employee> employees;
+//if (searchParam != null && !searchParam.isEmpty()) {
+//    employees = employeeDAO.getAllEmployeeWithParam(searchParam.trim());
+//} else {
+//    employees = employeeDAO.getAllEmployeeWithParam("");
+//}
+
 
             List<Employee> pagingEmployee = employeeDAO.Paging(employees, page, pageSize);
-            System.out.println(pagingEmployee.size());
+      
             request.setAttribute("employee", pagingEmployee);
             request.setAttribute("totalPages", employees.size() % pageSize == 0 ? (employees.size() / pageSize) : (employees.size() / pageSize + 1));
             request.setAttribute("currentPage", page);

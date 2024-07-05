@@ -5,22 +5,29 @@
 package Controller;
 
 import DAOs.AccountDAO;
-import Models.Customer;
 import Models.Admin;
+import Models.Customer;
 import Models.Employee;
-import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  *
- * @author giaun
+ * @author ADMIN
  */
+@WebServlet(name = "LoginController", urlPatterns = {"/LoginController"})
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ */
+
 public class LoginController extends HttpServlet {
 
     /**
@@ -63,7 +70,7 @@ public class LoginController extends HttpServlet {
             throws ServletException, IOException {
         String path = request.getRequestURI();
         if (path.endsWith("/login")) {
-            request.getRequestDispatcher("login.jsp").forward(request, response);
+            response.sendRedirect("login.jsp");
 
         }
 
@@ -83,7 +90,6 @@ public class LoginController extends HttpServlet {
         if (request.getParameter("loginSubmit") != null) {
             String email = request.getParameter("email");
             String password = request.getParameter("password");
-
             if (email.contains("@gmail")) {
                 AccountDAO ad = new AccountDAO();
                 Customer customer = ad.loginByCustomer(email, password); // Di chuyển dòng này lên trước
@@ -105,10 +111,10 @@ public class LoginController extends HttpServlet {
                     response.addCookie(passwordC);
                     HttpSession session = request.getSession();
                     session.setAttribute("customerInfor", customer);
-                    response.sendRedirect(request.getContextPath() + "/"); 
+                    response.sendRedirect(request.getContextPath() + "/");
                     System.out.println("Add Cookie Successfully");
                 } else {
-                    String message = "Email or password is incorrect";
+                    String message = "Email or password is incorrect!";
                     HttpSession session = request.getSession();
                     session.setAttribute("checkLoginMess", message);
                     response.sendRedirect(request.getContextPath() + "/login");
@@ -117,6 +123,8 @@ public class LoginController extends HttpServlet {
                 AccountDAO ad = new AccountDAO();
                 Admin admin = ad.loginByAdmin(email, password);
                 if (admin != null) {
+                     HttpSession session = request.getSession();
+                    session.setAttribute("Admin", admin);
                     String fullName = admin.getFullName();
                     int adminID = admin.getAdminID();
                     int roleID = admin.getRoleID();
@@ -137,7 +145,7 @@ public class LoginController extends HttpServlet {
                     response.addCookie(roleA);
                     response.sendRedirect(request.getContextPath() + "/admin");
                 } else {
-                    String message = "Email or password is incorrect";
+                    String message = "Email or password is incorrect!";
                     HttpSession session = request.getSession();
                     session.setAttribute("checkLoginMess", message);
                     response.sendRedirect(request.getContextPath() + "/login");
@@ -145,7 +153,7 @@ public class LoginController extends HttpServlet {
             } else if (email.contains("@zFlowers")) {
                 AccountDAO ad = new AccountDAO();
                 Employee employee = ad.loginByEmployee(email, password);
-                if (employee != null) {
+                if (employee != null && employee.getStatus() != 0) {
                     String fullName = employee.getFullName();
                     int employeeID = employee.getEmployeeID();
                     int roleID = employee.getRoleID();
@@ -164,16 +172,18 @@ public class LoginController extends HttpServlet {
                     response.addCookie(emailE);
                     response.addCookie(passwordE);
                     response.addCookie(roleE);
+                     HttpSession session = request.getSession();
+                    session.setAttribute("employee", employee);
                     response.sendRedirect(request.getContextPath() + "/employee");
                 } else {
-                    String message = "Email or password is incorrect";
+                    String message = "Email or password is incorrect!";
                     HttpSession session = request.getSession();
                     session.setAttribute("checkLoginMess", message);
                     response.sendRedirect(request.getContextPath() + "/login");
                 }
 
             } else {
-                String message = "Email or password is incorrect";
+                String message = "Email or password is incorrect!";
                 HttpSession session = request.getSession();
                 session.setAttribute("checkLoginMess", message);
                 response.sendRedirect(request.getContextPath() + "/login");

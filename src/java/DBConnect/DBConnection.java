@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  * @author Nguyen Van Giau - CE170449
  */
 public class DBConnection {
-    private static final String urlConnect = "jdbc:sqlserver://LAPTOP-BCDMRMAF\\MYLAPTOP:1433;databasename=FlowersShopWebsite;user=sa;password=sa;characterEncoding=UTF-8;encrypt=true;trustServerCertificate=true;";
+    private static final String urlConnect = "jdbc:sqlserver://localhost:1433;databasename=FlowersShopWebsite;user=sa;password=12345;characterEncoding=UTF-8;encrypt=true;trustServerCertificate=true;";
     public static Connection connect() {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");

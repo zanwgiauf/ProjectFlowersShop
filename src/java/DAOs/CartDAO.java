@@ -63,7 +63,7 @@ public class CartDAO {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
         return carts;
     }

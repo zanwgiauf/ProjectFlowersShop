@@ -20,6 +20,8 @@
             <label for="email">Enter your email:</label>
             <input type="email" class="form-control" id="email" name="email" required>
         </div>
+        
+        
         <button type="submit" class="btn btn-primary">Send Reset Link</button>
     </form>
 </div>

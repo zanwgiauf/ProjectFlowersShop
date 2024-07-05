@@ -57,7 +57,7 @@
             <nav class="container fixed-top" style="background-color:#7b88a8; border-radius:16px;">
                 <div class="row align-items-center">
                     <div class="col-lg-2 col-4 d-md-flex align-items-center justify-content-center">
-                        <a href="#header" class="text-white d-flex align-items-center">
+                        <a href="<%=request.getContextPath()%>/" class="text-white d-flex align-items-center">
                             <img src="./images/LogoF.png" width="70px" alt="logo" />
                             <span class="ms-2">Flower Shop</span>
                         </a>
@@ -123,7 +123,9 @@
                                         <p>Don't have an account? <a href="<%=request.getContextPath()%>/register" class="link-info forgotHover">Register here</a></p>
                                     </div>
                                     <hr>
-
+                                    <button data-mdb-button-init data-mdb-ripple-init class="btn btn-lg btn-block btn-outline-danger  mb-4 register-control" style="background-color: #dd4b39;" type="submit">
+                                        <i class="fab fa-google me-2"></i> Sign in with Google
+                                    </button>
                                 </div>
                             </form>
                         </div>
@@ -168,7 +170,7 @@
                 </div>
             </div>
             <div class="d-flex justify-content-center mt-4 pb-4">
-                <span>&copy; 2024, Desisgned by Group 4</span>
+                <span>&copy; 2024, Desisgned by Nguyen Van Giau</span>
             </div>
         </div>
     </footer>

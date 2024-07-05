@@ -38,18 +38,23 @@ public class FeedbackController extends HttpServlet {
             FeedbackDAO feedbackDAO = new FeedbackDAO();
             String pageParam = request.getParameter("page");
             String searchParam = request.getParameter("search");
-            int page = 1; // Default to the first page
+            int page = 1; // Default to the first pagez
             int pageSize = 5; // Set the desired page size
             if (pageParam != null && !pageParam.isEmpty()) {
                 page = Integer.parseInt(pageParam);
             }
             List<Feedback> feedbacks = new ArrayList<>();
+            //Nếu sau khi khởi tạo feedbacks như trên mà bạn không sử dụng feedbacks để thêm phần tử
+             //, truy cập phần tử, hoặc truyền feedbacks vào một phương thức nào đó, thì đây sẽ là một trường hợp của "unused assignment".
+       
             if (searchParam != null && !searchParam.isEmpty()) {
                 feedbacks = feedbackDAO.getAllFeedback(searchParam.trim(), null);
             } else {
                 feedbacks = feedbackDAO.getAllFeedback("", null);
             }
             System.out.println(feedbacks.size());
+            // ko nên sử dụng trong code này vì nó sẽ khó quản lí các cái log quan trọng
+            //bo
             List<Feedback> pagingFeedback = feedbackDAO.Paging(feedbacks, page, pageSize);
             request.setAttribute("feedback", pagingFeedback);
             request.setAttribute("totalPages", feedbacks.size() % pageSize == 0 ? (feedbacks.size() / pageSize) : (feedbacks.size() / pageSize + 1));

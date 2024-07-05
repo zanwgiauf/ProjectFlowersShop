@@ -31,40 +31,38 @@ public class CartController extends HttpServlet {
             CartDAO cdao = new CartDAO();
             int cartSize = cdao.getCartSizeForCustomer(customer.getCustomerID());
             session.setAttribute("cartSize", cartSize);  // Storing cart size in session
-    
-        String pageParam = request.getParameter("page");
-        String searchParam = request.getParameter("search");
-        int page = 1; // Default to the first page
-        int pageSize = 10; // Set the desired page size
-        if (pageParam != null && !pageParam.isEmpty()) {
-            page = Integer.parseInt(pageParam);
-        }
-        List<Cart> carts = new ArrayList<>();
-        if (searchParam != null && !searchParam.isEmpty()) {
-            carts = cdao.getAllCartForUserWithParam(searchParam.trim(), customer.getCustomerID());
+
+            String pageParam = request.getParameter("page");
+            String searchParam = request.getParameter("search");
+            int page = 1; // Default to the first page
+            int pageSize = 10; // Set the desired page size
+            if (pageParam != null && !pageParam.isEmpty()) {
+                page = Integer.parseInt(pageParam);
+            }
+            List<Cart> carts = new ArrayList<>();
+              //List<Cart> carts;
+            if (searchParam != null && !searchParam.isEmpty()) {
+                carts = cdao.getAllCartForUserWithParam(searchParam.trim(), customer.getCustomerID());
+            } else {
+                carts = cdao.getAllCartForUserWithParam(null, customer.getCustomerID());
+            }
+
+            List<Cart> pagingCart = cdao.Paging(carts, page, pageSize);
+            System.out.println(pagingCart.size());
+            request.setAttribute("cart", pagingCart);
+            request.setAttribute("totalPages", carts.size() % pageSize == 0 ? (carts.size() / pageSize) : (carts.size() / pageSize + 1));
+            request.setAttribute("currentPage", page);
+            request.setAttribute("searchParam", searchParam);
+
+            request.getRequestDispatcher("cart.jsp").forward(request, response);
         } else {
-            carts = cdao.getAllCartForUserWithParam(null, customer.getCustomerID());
-        }
-
-        List<Cart> pagingCart = cdao.Paging(carts, page, pageSize);
-        System.out.println(pagingCart.size());
-        request.setAttribute("cart", pagingCart);
-        request.setAttribute("totalPages", carts.size() % pageSize == 0 ? (carts.size() / pageSize) : (carts.size() / pageSize + 1));
-        request.setAttribute("currentPage", page);
-        request.setAttribute("searchParam", searchParam);
-
-        request.getRequestDispatcher("cart.jsp").forward(request, response);
-    }
-
-    
-        else {
 
             response.sendRedirect("login.jsp");
+        }
     }
-}
 
-@Override
-protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         HttpSession session = request.getSession();

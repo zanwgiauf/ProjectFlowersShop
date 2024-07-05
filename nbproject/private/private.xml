@@ -3,23 +3,26 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/giau/ProjectFlowersShop/web/reset_password.jsp</file>
-            <file>file:/D:/giau/ProjectFlowersShop/src/java/Models/Customer.java</file>
-            <file>file:/D:/giau/ProjectFlowersShop/src/java/Models/Promotion.java</file>
-            <file>file:/D:/giau/ProjectFlowersShop/src/java/DAOs/CustomerDAO.java</file>
-            <file>file:/D:/giau/ProjectFlowersShop/src/java/Models/Product.java</file>
-            <file>file:/D:/giau/ProjectFlowersShop/src/java/Controller/AdminProductController.java</file>
-            <file>file:/D:/giau/ProjectFlowersShop/src/java/Controller/EmployeeController.java</file>
-            <file>file:/D:/giau/ProjectFlowersShop/web/admin/adminproducts.jsp</file>
-            <file>file:/D:/giau/ProjectFlowersShop/src/java/DBConnect/DBConnection.java</file>
-            <file>file:/D:/giau/ProjectFlowersShop/src/java/Controller/LoginController.java</file>
-            <file>file:/D:/giau/ProjectFlowersShop/src/java/Models/Employee.java</file>
-            <file>file:/D:/giau/ProjectFlowersShop/web/admin/adminHome.jsp</file>
-            <file>file:/D:/giau/ProjectFlowersShop/web/index.jsp</file>
-            <file>file:/D:/giau/ProjectFlowersShop/web/forgot_password.jsp</file>
-            <file>file:/D:/giau/ProjectFlowersShop/src/java/DAOs/AccountDAO.java</file>
-            <file>file:/D:/giau/ProjectFlowersShop/src/java/DAOs/ProductDAO.java</file>
-            <file>file:/D:/giau/ProjectFlowersShop/src/java/Controller/ResetPasswordController.java</file>
+            <file>file:/D:/chelck_swp/Swp_chuẩn%20nhất/Swp_chuẩn%20nhất/checkcuong%20(1)/checkcuong/ProjectFlowersShop/src/java/Controller/CartController.java</file>
+            <file>file:/D:/chelck_swp/Swp_chuẩn%20nhất/Swp_chuẩn%20nhất/checkcuong%20(1)/checkcuong/ProjectFlowersShop/src/java/DAOs/EmployeeDAO.java</file>
+            <file>file:/D:/chelck_swp/Swp_chuẩn%20nhất/Swp_chuẩn%20nhất/checkcuong%20(1)/checkcuong/ProjectFlowersShop/src/java/Models/Order.java</file>
+            <file>file:/D:/chelck_swp/Swp_chuẩn%20nhất/Swp_chuẩn%20nhất/checkcuong%20(1)/checkcuong/ProjectFlowersShop/src/java/DAOs/AccountDAO.java</file>
+            <file>file:/D:/chelck_swp/Swp_chuẩn%20nhất/Swp_chuẩn%20nhất/checkcuong%20(1)/checkcuong/ProjectFlowersShop/src/java/Controller/ProductController.java</file>
+            <file>file:/D:/chelck_swp/Swp_chuẩn%20nhất/Swp_chuẩn%20nhất/checkcuong%20(1)/checkcuong/ProjectFlowersShop/web/index.jsp</file>
+            <file>file:/D:/chelck_swp/Swp_chuẩn%20nhất/Swp_chuẩn%20nhất/checkcuong%20(1)/checkcuong/ProjectFlowersShop/web/listProductManagement.jsp</file>
+            <file>file:/D:/chelck_swp/Swp_chuẩn%20nhất/Swp_chuẩn%20nhất/checkcuong%20(1)/checkcuong/ProjectFlowersShop/src/java/Models/Employee.java</file>
+            <file>file:/D:/chelck_swp/Swp_chuẩn%20nhất/Swp_chuẩn%20nhất/checkcuong%20(1)/checkcuong/ProjectFlowersShop/src/java/DAOs/ProductDAO.java</file>
+            <file>file:/D:/chelck_swp/Swp_chuẩn%20nhất/Swp_chuẩn%20nhất/checkcuong%20(1)/checkcuong/ProjectFlowersShop/src/java/Controller/EmployeeController.java</file>
+            <file>file:/D:/chelck_swp/Swp_chuẩn%20nhất/Swp_chuẩn%20nhất/checkcuong%20(1)/checkcuong/ProjectFlowersShop/src/java/DAOs/FeedbackDAO.java</file>
+            <file>file:/D:/chelck_swp/Swp_chuẩn%20nhất/Swp_chuẩn%20nhất/checkcuong%20(1)/checkcuong/ProjectFlowersShop/web/admin/employeeManagement.jsp</file>
+            <file>file:/D:/chelck_swp/Swp_chuẩn%20nhất/Swp_chuẩn%20nhất/checkcuong%20(1)/checkcuong/ProjectFlowersShop/web/register.jsp</file>
+            <file>file:/D:/chelck_swp/Swp_chuẩn%20nhất/Swp_chuẩn%20nhất/checkcuong%20(1)/checkcuong/ProjectFlowersShop/src/java/Controller/FeedbackController.java</file>
+            <file>file:/D:/chelck_swp/Swp_chuẩn%20nhất/Swp_chuẩn%20nhất/checkcuong%20(1)/checkcuong/ProjectFlowersShop/src/java/Controller/CategoryController.java</file>
+            <file>file:/D:/chelck_swp/Swp_chuẩn%20nhất/Swp_chuẩn%20nhất/checkcuong%20(1)/checkcuong/ProjectFlowersShop/src/java/Controller/ProductDetailsServlet.java</file>
+            <file>file:/D:/chelck_swp/Swp_chuẩn%20nhất/Swp_chuẩn%20nhất/checkcuong%20(1)/checkcuong/ProjectFlowersShop/src/java/Models/Admin.java</file>
+            <file>file:/D:/chelck_swp/Swp_chuẩn%20nhất/Swp_chuẩn%20nhất/checkcuong%20(1)/checkcuong/ProjectFlowersShop/web/employee/employeeHome.jsp</file>
+            <file>file:/D:/chelck_swp/Swp_chuẩn%20nhất/Swp_chuẩn%20nhất/checkcuong%20(1)/checkcuong/ProjectFlowersShop/src/java/Controller/RegisterController.java</file>
+            <file>file:/D:/chelck_swp/Swp_chuẩn%20nhất/Swp_chuẩn%20nhất/checkcuong%20(1)/checkcuong/ProjectFlowersShop/src/java/Models/StockDetail.java</file>
         </group>
     </open-files>
 </project-private>

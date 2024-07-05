@@ -80,7 +80,7 @@ public class AccountDAO {
     public Employee loginByEmployee(String email, String password) {
         Employee employee = null;
         try {
-            PreparedStatement ps = conn.prepareStatement("select * from Employees where email = ? and password = ?");
+            PreparedStatement ps = conn.prepareStatement("select * from Employees where email = ? and password = ? and status = 1");
             ps.setString(1, email);
             ps.setString(2, getMd5(password));
             ResultSet rs = ps.executeQuery();
@@ -97,7 +97,7 @@ public class AccountDAO {
         Customer customer = null;
 
         try {
-            PreparedStatement ps = conn.prepareStatement("select * from Customers where email = ? and password = ?");
+            PreparedStatement ps = conn.prepareStatement("select * from Customers where email = ? and password = ? and status = 1");
             ps.setString(1, email);
             ps.setString(2, getMd5(password));
             ResultSet rs = ps.executeQuery();

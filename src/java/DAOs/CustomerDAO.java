@@ -9,6 +9,7 @@ package DAOs;
  * @author AN515-57
  */
 import DBConnect.DBConnection;
+import Models.Customer;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -69,5 +70,24 @@ public class CustomerDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+     public Customer getById(int customerId) {
+        String sql = "SELECT * FROM Customers WHERE customerID = ?";
+        try (Connection conn = DBConnection.connect();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, customerId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                Customer customer = new Customer();
+                customer.setCustomerID(rs.getInt("customerID"));
+                customer.setFullName(rs.getString("fullName"));
+                customer.setEmail(rs.getString("email"));
+                customer.setPhone(rs.getString("phone"));
+                return customer;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null; // Return null if customer with given ID not found
     }
 }
