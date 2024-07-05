@@ -21,6 +21,13 @@ public class Cart {
     public Cart() {
     }
 
+    public Cart(int price, int quantity, int productID, int customerID) {
+        this.price = price;
+        this.quantity = quantity;
+        this.productID = productID;
+        this.customerID = customerID;
+    }
+
     public Cart(int cartID, int price, int quantity, int productID, int customerID) {
         this.cartID = cartID;
         this.price = price;
@@ -93,6 +100,10 @@ public class Cart {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getTotalCart() {
+        return price * quantity;
     }
 
 }

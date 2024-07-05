@@ -26,18 +26,16 @@ import java.util.logging.Logger;
 public class AccountDAO {
 
     Connection conn;
+    PreparedStatement ps;
+    ResultSet rs;
 
     public AccountDAO() {
         try {
             conn = DBConnection.connect();
-            if (conn != null) {
-                System.out.println("Database connection established successfully.");
-            } else {
-                System.out.println("Failed to establish database connection.");
-            }
         } catch (SQLException ex) {
             Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 
     public String getMd5(String input) {
@@ -89,7 +87,7 @@ public class AccountDAO {
             ps.setString(2, getMd5(password));
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                employee = new Employee(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(1));
+                employee = new Employee(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(7));
             }
         } catch (SQLException ex) {
             Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -116,6 +114,7 @@ public class AccountDAO {
         }
         return customer;
     }
+    
 
     // Hàm mã hóa văn bản thành Base64
     public String encodeString(String text) {

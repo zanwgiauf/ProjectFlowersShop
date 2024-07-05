@@ -3,25 +3,25 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/web/WEB-INF/web.xml</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/src/java/Models/Promotion.java</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/web/customer/purchase.jsp</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/web/customer/orderDetails.jsp</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/src/java/DAOs/OrderDAO.java</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/src/java/Controller/ManageUserAccountController.java</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/src/java/Models/Order.java</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/src/java/DAOs/CustomerDAO.java</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/src/java/Controller/CheckoutController.java</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/src/java/DBConnect/DBConnection.java</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/web/admin/adminHome.jsp</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/src/java/Models/OrderDetail.java</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/web/customer/checkout.jsp</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/src/java/Controller/OrderController.java</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/web/index.jsp</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/src/java/Models/Customer.java</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/src/java/Models/Product.java</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/web/login.jsp</file>
-            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/web/admin/manageCustomer.jsp</file>
+            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/FlowerShopWebsite/src/java/DAOs/CustomerDAO.java</file>
+            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/FlowerShopWebsite/web/WEB-INF/web.xml</file>
+            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/FlowerShopWebsite/src/java/Controller/CartController.java</file>
+            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/FlowerShopWebsite/web/customer/pendingOrders.jsp</file>
+            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/FlowerShopWebsite/web/customer/checkout.jsp</file>
+            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/FlowerShopWebsite/web/customer/cancelledOrders.jsp</file>
+            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/FlowerShopWebsite/src/java/Models/Product.java</file>
+            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/FlowerShopWebsite/src/java/DBConnect/DBConnection.java</file>
+            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/FlowerShopWebsite/src/java/DAOs/CartDAO.java</file>
+            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/FlowerShopWebsite/src/java/DAOs/OrderDetailDAO.java</file>
+            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/FlowerShopWebsite/web/customer/cart.jsp</file>
+            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/FlowerShopWebsite/src/java/DAOs/AccountDAO.java</file>
+            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/FlowerShopWebsite/src/java/Controller/OrderController.java</file>
+            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/FlowerShopWebsite/src/java/Controller/LoginController.java</file>
+            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/FlowerShopWebsite/src/java/Controller/HomeController.java</file>
+            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/FlowerShopWebsite/src/java/DAOs/OrderDAO.java</file>
+            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/FlowerShopWebsite/web/index.jsp</file>
+            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/FlowerShopWebsite/src/java/Models/Cart.java</file>
+            <file>file:/D:/FPT/SU24/SWP391/Project/FlowerShopWebsite/FlowerShopWebsite/FlowerShopWebsite/src/java/DAOs/ProductDAO.java</file>
         </group>
     </open-files>
 </project-private>

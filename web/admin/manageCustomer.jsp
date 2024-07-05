@@ -261,7 +261,7 @@
                                                     </c:if>
                                                     <c:if test="${c.status != 0}">
                                                         <a data-bs-toggle="modal" data-bs-target="#blockCustomerModal${c.customerID}">
-                                                            <i id="blockCustomerBtn${c.customerID}" class="fa fa-trash col-3" title="Delete"></i>
+                                                            <i id="blockCustomerBtn${c.customerID}" class="fa fa-trash col-3" title="Block"></i>
                                                         </a>
                                                     </c:if>
                                                 </td>

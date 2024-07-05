@@ -19,7 +19,7 @@ public class DBConnection {
     public static Connection connect() throws SQLException {
         String server = "VANGIAU\\ZANGIAU";
         String port = "1433";
-        String database = "FlowersShop";
+        String database = "FlowersShopWebsite";
         String user = "sa";
         String password = "123";
         Connection conn = null;

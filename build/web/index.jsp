@@ -18,7 +18,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd" crossorigin="anonymous">
         <style>
             .position-fixed {
-                z-index: 1050; 
+                z-index: 1050;
             }
             .top-25 {
                 top: 10%;
@@ -29,6 +29,17 @@
             .translate-middle {
                 transform: translate(-50%, -50%);
             }
+            .dropdown-item {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .dropdown-item button {
+                width: 100%;
+                text-align: left;
+            }
+
         </style>
 
 
@@ -101,13 +112,14 @@
                         <div class="btn-group">
                             <button type="button" class="btn btn-dark dropdown-toggle" style="border-radius:16px;"
                                     data-bs-toggle="dropdown"><span><%= ad.decodeString(fullName) %></span></button>
-                            <div class="dropdown-menu">
+                            <div class="dropdown-menu text-center">
                                 <a href="#" class="dropdown-item">Profile</a>
-                                <a href="<%=request.getContextPath()%>/purchaseHistory?customerID=<%=customerID%>" class="dropdown-item">My purchases</a>
-                                <form class="dropdown-item " action="logout" method="post">
-                                    <button class="btn btn-outline-dark" name="btnLogout" >Logout</button>
+                                <a href="<%= request.getContextPath() %>/order/purchasehistory" class="nav-link btn btn-link">My purchases</a>
+                                <form action="logout" method="post" class="dropdown-item m-0 p-0">
+                                    <button type="submit" name="btnLogout" class="btn btn-link dropdown-item">Logout</button>
                                 </form>
                             </div>
+
                         </div>
                     </div>
                     <div class="d-lg-none col-1  d-flex  align-items-start justify-content-center">
