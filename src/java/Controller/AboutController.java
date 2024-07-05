@@ -18,7 +18,7 @@ import jakarta.servlet.http.HttpServletResponse;
  * @author Le Minh Truong - CE171886
  */
 @WebServlet(name="About", urlPatterns={"/about"})
-public class About extends HttpServlet {
+public class AboutController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
