@@ -25,40 +25,42 @@
             .table-img {
                 width: 50px;
                 height: 50px;
+                object-fit: cover;
+            }
+            .align-middle {
+                vertical-align: middle !important;
             }
         </style>
+
+        <script>
+            function confirmCancel(orderID) {
+                var myModal = new bootstrap.Modal(document.getElementById('confirmModal'));
+                document.getElementById('orderIdInput').value = orderID;
+                myModal.show();
+            }
+        </script>
     </head>
     <body>
         <%
-                    String fullName = "";
-                    int customerID = 0;
-                    Cookie cookies[] = request.getCookies();
-                    if (cookies != null) {
-                        for (int i = 0; i < cookies.length; i++) {
-                            if(cookies[i].getName().contains("roleA")){
-                            response.sendRedirect(request.getContextPath()+ "/admin");
-                            }else if(cookies[i].getName().contains("roleE")){
-                            response.sendRedirect(request.getContextPath()+ "/employee");
-                            }else{
-                                if (cookies[i].getName().equals("fullNameC")) {
-                                fullName = cookies[i].getValue();
-                                } else if (cookies[i].getName().equals("idC")) {
-                                customerID = Integer.parseInt(cookies[i].getValue());
-                                }
-                            }
+            String fullName = "";
+            int customerID = 0;
+            Cookie cookies[] = request.getCookies();
+            if (cookies != null) {
+                for (int i = 0; i < cookies.length; i++) {
+                    if(cookies[i].getName().contains("roleA")){
+                    response.sendRedirect(request.getContextPath()+ "/admin");
+                    }else if(cookies[i].getName().contains("roleE")){
+                    response.sendRedirect(request.getContextPath()+ "/employee");
+                    }else{
+                        if (cookies[i].getName().equals("fullNameC")) {
+                        fullName = cookies[i].getValue();
+                        } else if (cookies[i].getName().equals("idC")) {
+                        customerID = Integer.parseInt(cookies[i].getValue());
                         }
                     }
-                   
-                    String noLogin = "";
-                    String yeslogin = "";
-                    if (!fullName.equals("")) {
-                        noLogin = "none";
-                        yeslogin = "";
-                    } else {
-                        noLogin = "";
-                        yeslogin = "none";
-                    }   
-                    %>
+                }
+            }
+        %>
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
                 <div class="container-fluid">
@@ -66,15 +68,22 @@
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav">
+                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a class="nav-link active fw-bold" href="<%= request.getContextPath() %>/pendingOrders">Pending</a>
+                                <a href="<%= request.getContextPath() %>/order/pendingOrder" class="nav-link btn btn-link active fw-bold">Pending</a>
                             </li>
-                           
                             <li class="nav-item">
-                                <a class="nav-link" href="<%=request.getContextPath()%>/purchaseHistory?customerID=<%=customerID%>">Completed</a>
+                                <a href="<%= request.getContextPath() %>/order/accepted" class="nav-link btn btn-link">Accepted</a>
                             </li>
-
+                            <li class="nav-item">
+                                <a href="<%= request.getContextPath() %>/order/delivering" class="nav-link btn btn-link">Delivering</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<%= request.getContextPath() %>/order/purchasehistory" class="nav-link btn btn-lin">Purchase History</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<%= request.getContextPath() %>/order/cancelled" class="nav-link btn btn-link">Cancelled</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -87,25 +96,30 @@
                     </div>
                 </c:if>
                 <c:if test="${not empty pendingOrders}">
-                    <table class="table table-striped table-bordered">
+                    <table class="table  text-center">
                         <thead class="table-dark">
                             <tr>
                                 <th scope="col">Image</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Quantity</th>
                                 <th scope="col">Price</th>
+                                <th scope="col">Total Price</th>
+                                <th scope="col">Order Date</th>
                                 <th scope="col">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             <c:forEach var="orderDetail" items="${pendingOrders}">
                                 <tr>
-                                    <td><img src="${orderDetail.image}" alt="Product Image" class="table-img"></td>
-                                    <td>${orderDetail.name}</td>
-                                    <td>${orderDetail.quantity}</td>
-                                    <td>${orderDetail.price}</td>
-                                    <td>
-                                        <a href="<%= request.getContextPath() %>/pendingOrders?action=cancel&id=${orderDetail.orderID}" class="btn btn-danger btn-sm me-2"><i class="bi bi-x-circle"></i> Cancel Order</a>
+                                    <td class="align-middle"><img src="../${orderDetail.image}"  alt="Product Image" class="table-img"></td>
+                                    <td class="align-middle">${orderDetail.name}</td>
+                                    <td class="align-middle">${orderDetail.quantity}</td>
+                                    <td class="align-middle">${orderDetail.price}</td>
+                                    <td class="align-middle">${orderDetail.totalPrice}</td>
+                                    <td class="align-middle">${orderDetail.dateCreate}</td>
+                                    <td class="align-middle">
+                                        <a href="javascript:void(0);" onclick="confirmCancel(${orderDetail.orderID})" class="btn btn-outline-danger btn-sm me-2"><i class="bi bi-x-circle"></i> Cancel Order</a>
+                                        <a href="../order/editInfoOrder/${orderDetail.orderID}" class="btn btn-outline-info btn-sm me-2"><i class="bi bi-pencil"></i> Edit Information Order</a>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -115,9 +129,30 @@
             </div>
 
             <div class="mt-4">
-                <a href="<%= request.getContextPath() %>/home" class="btn btn-secondary"><i class="bi bi-house"></i> Back to Home</a>
+                <a href="<%= request.getContextPath() %>/" class="btn btn-secondary"><i class="bi bi-house"></i> Back to Home</a>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmModalLabel">Confirm Cancel</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to cancel this order?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                        <form id="cancelForm" action="<%= request.getContextPath() %>/order/cancelOrder">
+                            <input type="hidden" name="orderId" id="orderIdInput">
+                            <button type="submit" name="cancel" class="btn btn-danger">Yes, Cancel</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </body>
 </html>
-

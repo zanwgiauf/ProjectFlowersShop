@@ -6,6 +6,9 @@ package DAOs;
 
 import DBConnect.DBConnection;
 import Models.Customer;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,15 +27,11 @@ public class CustomerDAO {
     Connection conn;
 
     public CustomerDAO() {
-        try {
-            conn = DBConnection.connect();
-            if (conn != null) {
-                System.out.println("Database connection established successfully.");
-            } else {
-                System.out.println("Failed to establish database connection.");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        conn = DBConnection.connect();
+        if (conn != null) {
+            System.out.println("Database connection established successfully.");
+        } else {
+            System.out.println("Failed to establish database connection.");
         }
     }
 
@@ -105,4 +104,168 @@ public class CustomerDAO {
         return list;
     }
 
+    public boolean isEmailRegistered(String email) {
+        String sql = "SELECT COUNT(*) FROM Customers WHERE email = ?";
+        try ( Connection conn = DBConnection.connect();  PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public void saveResetToken(String email, String token) {
+        String sql = "UPDATE Customers SET reset_token = ? WHERE email = ?";
+        try ( Connection conn = DBConnection.connect();  PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, token);
+            ps.setString(2, email);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean verifyResetToken(String email, String token) {
+        String sql = "SELECT COUNT(*) FROM Customers WHERE email = ? AND reset_token = ?";
+        try ( Connection conn = DBConnection.connect();  PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, email);
+            ps.setString(2, token);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean updatePassword(String email, String newPassword) {
+        if (newPassword == null || newPassword.trim().isEmpty()) {
+            System.out.println("Mật khẩu mới không được để trống");
+            return false;
+        }
+        String hashedPassword = hashMD5(newPassword);
+        String sql = "UPDATE Customers SET password = ? WHERE email = ?";
+        try ( Connection conn = DBConnection.connect();  PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, hashedPassword);
+            stmt.setString(2, email);
+            int rowsUpdated = stmt.executeUpdate();
+            return rowsUpdated > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    private String hashMD5(String input) {
+        if (input == null) {
+            throw new IllegalArgumentException("Input for hashing cannot be null");
+        }
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] messageDigest = md.digest(input.getBytes());
+            BigInteger no = new BigInteger(1, messageDigest);
+            String hashText = no.toString(16);
+            while (hashText.length() < 32) {
+                hashText = "0" + hashText;
+            }
+            return hashText;
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("Could not find MD5 hashing algorithm", e);
+        }
+    }
+
+    public static boolean emailExists(String email) {
+        String sql = "SELECT COUNT(*) AS count FROM Customers WHERE email = ?";
+        try ( Connection conn = DBConnection.connect();  PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, email);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("count") > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public Customer getCustomerById(int customerID) {
+        String sql = "SELECT * FROM Customers WHERE customerID = ?";
+        try ( Connection conn = DBConnection.connect();  PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, customerID);
+            try ( ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return new Customer(
+                            rs.getInt("customerID"),
+                            rs.getString("fullName"),
+                            rs.getString("birthday"),
+                            rs.getString("phone"),
+                            rs.getString("email"),
+                            rs.getString("address"),
+                            rs.getString("password"),
+                            rs.getInt("status")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void updateCustomer(Customer customer) {
+        String sql = "UPDATE Customers SET fullName = ?, birthday = ?, phone = ?, email = ?, address = ? WHERE customerID = ?";
+        try ( Connection conn = DBConnection.connect();  PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, customer.getFullName());
+            ps.setString(2, customer.getBirthday());
+            ps.setString(3, customer.getPhone());
+            ps.setString(4, customer.getEmail());
+            ps.setString(5, customer.getAddress());
+            ps.setInt(6, customer.getCustomerID());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Customer getById(int customerId) {
+
+        String sql = "SELECT * FROM Customers WHERE customerID = ?";
+
+        try ( Connection conn = DBConnection.connect();  PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, customerId);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+
+                Customer customer = new Customer();
+
+                customer.setCustomerID(rs.getInt("customerID"));
+
+                customer.setFullName(rs.getString("fullName"));
+
+                customer.setEmail(rs.getString("email"));
+
+                customer.setPhone(rs.getString("phone"));
+
+                return customer;
+
+            }
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+
+        }
+
+        return null; // Return null if customer with given ID not found
+
+    }
 }

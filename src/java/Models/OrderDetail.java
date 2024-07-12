@@ -15,13 +15,23 @@ public class OrderDetail {
     private int detailID;
     private String name;
     private int price;
+    private int totalPrice;
     private int quantity;
     private int orderID;
     private int productID;
     private String image;
     private Date dateCreate;
+    private int status;
 
     public OrderDetail() {
+    }
+
+    public OrderDetail(String name, int price, int quantity, int orderID, int productID) {
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+        this.orderID = orderID;
+        this.productID = productID;
     }
 
     public OrderDetail(int detailID, String name, int price, int quantity, int orderID, int productID) {
@@ -33,18 +43,18 @@ public class OrderDetail {
         this.productID = productID;
     }
 
-    public OrderDetail(int detailID, String name, int price, int quantity, int orderID, int productID, String image, Date dateCreate) {
+    public OrderDetail(int detailID, String name, int price, int totalPrice, int quantity, int orderID, int productID, String image, Date dateCreate, int status) {
         this.detailID = detailID;
         this.name = name;
         this.price = price;
+        this.totalPrice = totalPrice;
         this.quantity = quantity;
         this.orderID = orderID;
         this.productID = productID;
         this.image = image;
         this.dateCreate = dateCreate;
+        this.status = status;
     }
-
-    
 
     public int getDetailID() {
         return detailID;
@@ -68,6 +78,14 @@ public class OrderDetail {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public int getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(int totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     public int getQuantity() {
@@ -108,6 +126,14 @@ public class OrderDetail {
 
     public void setDateCreate(Date dateCreate) {
         this.dateCreate = dateCreate;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
 }

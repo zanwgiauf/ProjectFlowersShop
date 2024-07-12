@@ -26,17 +26,15 @@ import java.util.logging.Logger;
 public class AccountDAO {
 
     Connection conn;
+    PreparedStatement ps;
+    ResultSet rs;
 
     public AccountDAO() {
-        try {
-            conn = DBConnection.connect();
-            if (conn != null) {
-                System.out.println("Database connection established successfully.");
-            } else {
-                System.out.println("Failed to establish database connection.");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        conn = DBConnection.connect();
+        if (conn != null) {
+            System.out.println("Database connection established successfully.");
+        } else {
+            System.out.println("Failed to establish database connection.");
         }
     }
 
@@ -89,7 +87,7 @@ public class AccountDAO {
             ps.setString(2, getMd5(password));
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                employee = new Employee(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(1));
+                employee = new Employee(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(7));
             }
         } catch (SQLException ex) {
             Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -139,5 +137,43 @@ public class AccountDAO {
         }
     }
 
-    
+    public boolean emailExists(String email) {
+        try {
+            PreparedStatement ps = conn.prepareStatement("SELECT COUNT(*) FROM Customers WHERE email = ?");
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next() && rs.getInt(1) > 0) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    public boolean registerCustomer(String fullName, String birthday, String phone, String email, String address, String password) {
+        try {
+            if (fullName == null || birthday == null || phone == null || email == null || address == null || password == null) {
+                return false;
+            }
+
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO Customers (fullName, birthday, phone, email, address, password, status) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            ps.setString(1, fullName);
+            ps.setDate(2, java.sql.Date.valueOf(birthday)); // Convert String to java.sql.Date
+            ps.setString(3, phone);
+            ps.setString(4, email);
+            ps.setString(5, address);
+            ps.setString(6, getMd5(password));
+            ps.setInt(7, 1); // Assuming status '1' means active
+
+            int rowsAffected = ps.executeUpdate();
+            ps.close();
+
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }

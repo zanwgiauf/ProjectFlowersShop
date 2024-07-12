@@ -18,6 +18,7 @@ public class Product {
     private String description;
     private String image;
     private int categoryID;
+    private int stock_quantity;
 
     public Product() {
     }
@@ -31,6 +32,18 @@ public class Product {
         this.description = description;
         this.image = image;
         this.categoryID = categoryID;
+    }
+
+    public Product(int productID, String name, int price, int reducedPrice, int quantity, String description, String image, int categoryID, int stock_quantity) {
+        this.productID = productID;
+        this.name = name;
+        this.price = price;
+        this.reducedPrice = reducedPrice;
+        this.quantity = quantity;
+        this.description = description;
+        this.image = image;
+        this.categoryID = categoryID;
+        this.stock_quantity = stock_quantity;
     }
 
     public int getProductID() {
@@ -95,6 +108,14 @@ public class Product {
 
     public void setCategoryID(int categoryID) {
         this.categoryID = categoryID;
+    }
+
+    public int getStock_quantity() {
+        return stock_quantity;
+    }
+
+    public void setStock_quantity(int stock_quantity) {
+        this.stock_quantity = stock_quantity;
     }
 
 }

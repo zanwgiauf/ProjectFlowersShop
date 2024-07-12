@@ -15,16 +15,37 @@
         <link rel="stylesheet" href="<%= request.getContextPath()%>/lib/bootstrap/bootstrap_css/bootstrap.min.css" />
         <link rel="stylesheet" href="<%= request.getContextPath()%>/css/style.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" />
-
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
-                integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"
-        defer></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
-                integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"
-        defer></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous" defer></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+        <script>
+            function validateForm() {
+                var phone = document.getElementById("yourPhone").value;
+                var email = document.getElementById("yourEmail").value;
+                var birthday = document.getElementById("yourDate").value;
+                var phoneRegex = /^\d{10}$/; // Kiểm tra số điện thoại có 10 chữ số
+                var emailRegex = /^[^\s@]+@gmail\.com$/; // Chỉ cho phép email @gmail.com
+                var today = new Date();
+                var birthDate = new Date(birthday);
 
+                if (!phoneRegex.test(phone)) {
+                    alert("Invalid phone number. Please enter 10 digits.");
+                    return false;
+                }
 
+                if (!emailRegex.test(email)) {
+                    alert("Invalid email. Only @gmail.com emails are allowed.");
+                    return false;
+                }
+
+                if (birthDate >= today) {
+                    alert("Birthday must be in the past.");
+                    return false;
+                }
+
+                return true;
+            }
+        </script>
     </head>
     <body>
         <header>
@@ -70,43 +91,117 @@
                     <div class="card" style="border-radius: 15px;">
                         <div class="card-body p-5">
                             <h2 class="text-uppercase text-center mb-5">Register</h2>
-                            <form method="post" method="/SendEmailController">
+
+                            <!-- Display registration status messages -->
+                            <%
+                                String registrationStatus = (String) request.getAttribute("registrationStatus");
+                                if ("success".equals(registrationStatus)) {
+                            %>
+                            <div class="alert alert-success" role="alert">
+                                <p>Registration successful! You can log in now.</p>
+                                <p>If this is your first time registering, click 
+                                    <a href="<%=request.getContextPath() %>/login" class="alert-link" style="color: blue;">here</a> 
+                                    to log in.
+                                </p>
+                            </div>
+                            <%
+                                } else {
+                            %>
+                            <!-- Error messages -->
+                            <%
+                                if ("error".equals(registrationStatus)) {
+                            %>
+                            <div class="alert alert-danger" role="alert">
+                                Registration failed! Please try again.
+                            </div>
+                            <%
+                                } else if ("invalidPhone".equals(registrationStatus)) {
+                            %>
+                            <div class="alert alert-danger" role="alert">
+                                Invalid phone number. Please enter 10 digits.
+                            </div>
+                            <%
+                                } else if ("invalidEmail".equals(registrationStatus)) {
+                            %>
+                            <div class="alert alert-danger" role="alert">
+                                Invalid email. Only @gmail.com emails are allowed.
+                            </div>
+                            <%
+                                } else if ("invalidName".equals(registrationStatus)) {
+                            %>
+                            <div class="alert alert-danger" role="alert">
+                                Invalid name. Name must contain at least two words with capitalized first letters.
+                            </div>
+                            <%
+                                } else if ("invalidAddress".equals(registrationStatus)) {
+                            %>
+                            <div class="alert alert-danger" role="alert">
+                                Invalid address. Address must not contain special characters.
+                            </div>
+                            <%
+                                } else if ("emailExists".equals(registrationStatus)) {
+                            %>
+                            <div class="alert alert-danger" role="alert">
+                                Email already exists. Please use a different email.
+                            </div>
+                            <%
+                                } else if ("invalidDate".equals(registrationStatus)) {
+                            %>
+                            <div class="alert alert-danger" role="alert">
+                                Birthday must be in the past.
+                            </div>
+                            <%
+                                } else if ("shortPassword".equals(registrationStatus)) {
+                            %>
+                            <div class="alert alert-danger" role="alert">
+                                Password must be at least 6 characters long.
+                            </div>
+                            <%
+                                } else if ("passwordMismatch".equals(registrationStatus)) {
+                            %>
+                            <div class="alert alert-danger" role="alert">
+                                Password and Repeat Password do not match.
+                            </div>
+                            <%
+                                }
+                            %>
+
+                            <!-- Registration form -->
+                            <form method="post" action="RegisterController" onsubmit="return validateForm();">
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="yourName">Your Name</label>
-                                    <input type="text" id="yourName" class="form-control form-control-lg" placeholder="Enter your name" required=""/>
+                                    <input type="text" id="yourName" name="yourName" class="form-control form-control-lg" placeholder="Enter your name" value="<%= request.getAttribute("yourName") != null ? request.getAttribute("yourName") : "" %>" required=""/>
                                 </div>
-                                <div  class="form-outline mb-4">
+                                <div class="form-outline mb-4">
                                     <label class="form-label" for="yourDate">Your Birthday</label>
-                                    <input type="date" id="yourDate" class="form-control form-control-lg" placeholder="Choose your birthday" required=""/>
+                                    <input type="date" id="yourDate" name="yourDate" class="form-control form-control-lg" placeholder="Choose your birthday" value="<%= request.getAttribute("yourDate") != null ? request.getAttribute("yourDate") : "" %>" required=""/>
                                 </div>
-                                <div  class="form-outline mb-4">
+                                <div class="form-outline mb-4">
                                     <label class="form-label" for="yourPhone">Your Phone Number</label>
-                                    <input type="text" id="yourPhone" class="form-control form-control-lg" placeholder="Enter your phone number" required=""/>
+                                    <input type="text" id="yourPhone" name="yourPhone" class="form-control form-control-lg" placeholder="Enter your phone number" value="<%= request.getAttribute("yourPhone") != null ? request.getAttribute("yourPhone") : "" %>" required=""/>
                                 </div>
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="yourEmail">Your Email</label>
-                                    <input type="email" id="yourEmail" class="form-control form-control-lg"  placeholder="Enter your email" required=""/>
+                                    <input type="email" id="yourEmail" name="yourEmail" class="form-control form-control-lg" placeholder="Enter your email" value="<%= request.getAttribute("yourEmail") != null ? request.getAttribute("yourEmail") : "" %>" required=""/>
                                 </div>
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="yourAddress">Your Address</label>
-                                    <input type="password" id="yourAddress" class="form-control form-control-lg"  placeholder="Enter your address" required=""/>
+                                    <input type="text" id="yourAddress" name="yourAddress" class="form-control form-control-lg" placeholder="Enter your address" value="<%= request.getAttribute("yourAddress") != null ? request.getAttribute("yourAddress") : "" %>" required=""/>
                                 </div>
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="yourPassword">Password</label>
-                                    <input type="password" id="yourPassword" class="form-control form-control-lg" placeholder="Enter your password"  required=""/>
-
+                                    <input type="password" id="yourPassword" name="yourPassword" class="form-control form-control-lg" placeholder="Enter your password" required=""/>
                                 </div>
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="yourRepeatPassword">Repeat your password</label>
-                                    <input type="password" id="yourRepeatPassword" class="form-control form-control-lg" placeholder="Re-enter your password"  required=""/>
+                                    <input type="password" id="yourRepeatPassword" name="yourRepeatPassword" class="form-control form-control-lg" placeholder="Re-enter your password" required=""/>
                                 </div>
                                 <div class="d-flex justify-content-center">
-                                    <button  type="submit" 
-                                             class="btn btn-primary btn-block btn-lg">Register</button>
+                                    <button type="submit" class="btn btn-primary btn-block btn-lg">Register</button>
                                 </div>
-                                <p class="text-center text-muted mt-5 mb-0">Have already an account? <a href="<%=request.getContextPath() %>/LoginController"
-                                                                                                        class="text-info"><u>Login here</u></a></p>
+                                <p class="text-center text-muted mt-5 mb-0">Have already an account? <a href="<%=request.getContextPath() %>/login" class="text-info"><u>Login here</u></a></p>
                             </form>
+                            <% } %>
                         </div>
                     </div>
                 </div>
@@ -151,9 +246,6 @@
 
         <script src="<%= request.getContextPath()%>/lib/bootstrap/bootstrap_js/bootstrap.min.js"></script>
         <script src="<%= request.getContextPath()%>/sang/js/vendor/jquery-2.2.4.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
-                integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
-        crossorigin="anonymous"></script>
-
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
     </body>
 </html>

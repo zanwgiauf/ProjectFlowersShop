@@ -4,182 +4,288 @@
     Author     : Nguyen Van Giau - CE170449
 --%>
 
+<%@page import="Models.Cart"%>
+<%@page import="DAOs.AccountDAO"%>
+<%@page import="DAOs.CartDAO"%>
+<%@page import="Models.Customer"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.Map"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Checkout Page</title>
-        <link rel="Website Icon" href="<%= request.getContextPath()%>/images/LogoF.png" type="png" />
+        <link rel="icon" href="<%= request.getContextPath()%>/images/LogoF.png" type="image/png" />
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd" crossorigin="anonymous">
-
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" crossorigin="anonymous">
+        <style>
+            body {
+                padding: 20px;
+                background-color: #f8f9fa;
+            }
+            .container {
+                max-width: 1200px;
+            }
+            .table-img {
+                width: 50px;
+                height: 50px;
+                object-fit: cover;
+            }
+            .card-header {
+                background-color: #343a40;
+                color: #fff;
+            }
+            .card-body {
+                background-color: #ffffff;
+            }
+            .btn-primary {
+                background-color: #007bff;
+                border: none;
+            }
+            .btn-primary:hover {
+                background-color: #0056b3;
+            }
+            .btn-secondary {
+                background-color: #6c757d;
+                border: none;
+            }
+            .btn-secondary:hover {
+                background-color: #5a6268;
+            }
+            .error-message {
+                color: red;
+                display: none;
+            }
+        </style>
     </head>
     <body>
-        <div class="container">
-            <div class="py-5 text-center">
-                <h2>Checkout</h2>
-            </div>
-
-            <div class="row">
-                <div class="col-md-4 order-md-2 mb-4">
-                    <h4 class="d-flex justify-content-between align-items-center mb-3">
-                        <span class="text-muted">Your cart</span>
-                        <span class="badge badge-secondary badge-pill">3</span>
-                    </h4>
-                    <ul class="list-group mb-3">
-                        <li class="list-group-item d-flex justify-content-between lh-condensed">
-                            <div>
-                                <h6 class="my-0">Product name</h6>
-                                <small class="text-muted">Brief description</small>
-                            </div>
-                            <span class="text-muted">$12</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between lh-condensed">
-                            <div>
-                                <h6 class="my-0">Second product</h6>
-                                <small class="text-muted">Brief description</small>
-                            </div>
-                            <span class="text-muted">$8</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between lh-condensed">
-                            <div>
-                                <h6 class="my-0">Third item</h6>
-                                <small class="text-muted">Brief description</small>
-                            </div>
-                            <span class="text-muted">$5</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between bg-light">
-                            <div class="text-success">
-                                <h6 class="my-0">Promo code</h6>
-                                <small>EXAMPLECODE</small>
-                            </div>
-                            <span class="text-success">-$5</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between">
-                            <span>Total (USD)</span>
-                            <strong>$20</strong>
-                        </li>
+        <%
+            String fullName = "";
+            int customerID = 0;
+            Cookie cookies[] = request.getCookies();
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().contains("roleA")) {
+                        response.sendRedirect(request.getContextPath() + "/admin");
+                    } else if (cookie.getName().contains("roleE")) {
+                        response.sendRedirect(request.getContextPath() + "/employee");
+                    } else {
+                        if (cookie.getName().equals("fullNameC")) {
+                            fullName = cookie.getValue();
+                        } else if (cookie.getName().equals("idC")) {
+                            customerID = Integer.parseInt(cookie.getValue());
+                        }
+                    }
+                }
+            }
+            AccountDAO ad = new AccountDAO();
+        %>
+        <div class="container-fluid">
+            <h2 class="text-center text-info text-uppercase my-3">Check out</h2>
+            <c:if test="${not empty errors}">
+                <div class="alert alert-danger">
+                    <ul>
+                        <c:forEach var="error" items="${errors}">
+                            <li>${error}</li>
+                            </c:forEach>
                     </ul>
-
-                    <form class="card p-2">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Promo code">
-                            <div class="input-group-append">
-                                <button type="submit" class="btn btn-secondary">Redeem</button>
+                </div>
+            </c:if>
+            <div class="row">
+                <div class="col-md-6">
+                    <h4 class="text-center text-uppercase">Shipping Information</h4>
+                    <form id="placeOrder" action="order" method="post" onsubmit="return validatePlaceOrder()">
+                        <div class="row mt-2">
+                            <div class="mt-2">
+                                <input type="text" class="form-control" value="<%= ad.decodeString(fullName) %>" placeholder="Your Name" readonly>
+                            </div>
+                            <div class="mt-2">
+                                <input type="text" class="form-control" name="phone" placeholder="Phone">
+                                <div id="phone-error" class="error-message"></div>
                             </div>
                         </div>
+                        <div class="mt-2">
+                            <select name="address" class="form-control" onchange="calculateShippingFee()">
+                                <option value="">Select District</option>
+                                <option value="Ninh Kieu">Ninh Kieu</option>
+                                <option value="Binh Thuy">Binh Thuy</option>
+                                <option value="Cai Rang">Cai Rang</option>
+                                <option value="O Mon">O Mon</option>
+                                <option value="Thot Not">Thot Not</option>
+                                <option value="Phong Dien">Phong Dien</option>
+                                <option value="Co Do">Co Do</option>
+                                <option value="Thoi Lai">Thoi Lai</option>
+                                <option value="Vinh Thanh">Vinh Thanh</option>
+                            </select>
+                            <div id="delivery-address-error" class="error-message"></div>
+                        </div>
+                        <div class="mt-2">
+                            <textarea name="note" placeholder="Note" class="form-control"></textarea>
+                        </div>
+                                                
+                        <div class="mt-2">
+                        <input type="checkbox" name="d" value="0"/> Cash on Delivery
+                        <input type="checkbox" name="d" value="1"/> Bank Transfer
+                        </div>
+                        
+                        <button type="submit" class="order-now form-control mt-2" name="btnPlaceOrder"><i class="bi bi-bag-fill"></i>Place Order</button>            
                     </form>
                 </div>
-                <div class="col-md-8 order-md-1">
-                    <h4 class="mb-3">Billing address</h4>
-                    <form class="needs-validation" novalidate>
-                        <div class="row">
-                            <div class="col-md-12 mb-3">
-                                <label for="firstName">FullName</label>
-                                <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
-                                <div class="invalid-feedback">
-                                    Valid first name is required.
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="username">Phone</label>
-                            <div class="input-group">
-
-                                <input type="text" class="form-control" id="phone" placeholder="Phone" required>
-                                <div class="invalid-feedback" style="width: 100%;">
-                                    Your phone is required.
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="email">Email <span class="text-muted">(Optional)</span></label>
-                            <input type="email" class="form-control" id="email" placeholder="">
-                            <div class="invalid-feedback">
-                                Please enter a valid email address for shipping updates.
-                            </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="address">Address</label>
-                            <input type="text" class="form-control" id="address" placeholder="" required>
-                            <div class="invalid-feedback">
-                                Please enter your shipping address.
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-5 mb-3">
-                                <label for="country">Country</label>
-                                <select class="custom-select d-block w-100" id="country" required>
-                                    <option value="">Choose...</option>
-                                    <option>United States</option>
-                                </select>
-                                <div class="invalid-feedback">
-                                    Please select a valid country.
-                                </div>
-                            </div>
-
-
-                        </div>
-
-
-                        <h4 class="mb-3">Payment</h4>
-
-                        <div class="d-block my-3">
-                            <div class="custom-control custom-radio">
-                                <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked required>
-                                <label class="custom-control-label" for="credit">Credit card</label>
-                            </div>
-                            <div class="custom-control custom-radio">
-                                <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required>
-                                <label class="custom-control-label" for="debit">Debit card</label>
-                            </div>
-
-                        </div>
-
-                        <hr class="mb-4">
-                        <button class="btn btn-primary btn-lg btn-block" type="sutìt6r5r57edcv gytreyubmit">Continue to checkout</button>
-                    </form>
+                <div class="col-md-6 border-left">
+                    <div class="product-table-container">
+                        <c:if test="${cart_out.size()!=0}">
+                            <h6 style="color: red">This product is not enough quantity!</h6>
+                            <table class="table">
+                                <thead class="place-title-th">
+                                    <tr>
+                                        <th></th>
+                                        <th>Name</th>
+                                        <th>Quantity</th>
+                                        <th>Price</th>
+                                    </tr>
+                                </thead>
+                                <c:forEach items="${cart_out}" var="c">
+                                    <tbody class="place-title-tb">
+                                        <tr>
+                                            <td>
+                                                <img src="./images/${c.image}" width="100px" class="img-fluid" alt="">
+                                            </td>
+                                            <td>${c.name}</td>
+                                            <td>${c.quantity}</td>
+                                            <td>${c.price}</td>
+                                        </tr>
+                                    </tbody>
+                                </c:forEach>
+                            </table>
+                        </c:if>
+                        <c:if test="${cart_buy.size()!=0}">
+                            <h6 style="color: green">This product is available for purchase</h6>
+                            <table class="table">
+                                <thead class="place-title-th">
+                                    <tr>
+                                        <th></th>
+                                        <th>Name</th>
+                                        <th>Quantity</th>
+                                        <th>Price</th>
+                                    </tr>
+                                </thead>
+                                <c:forEach items="${cart_buy}" var="c">
+                                    <tbody class="place-title">
+                                        <tr>
+                                            <td>
+                                                <img src="${c.image}" width="100px" height="100%" class="img-fluid" alt="${c.image}">
+                                            </td>
+                                            <td>${c.name}</td>
+                                            <td>${c.quantity}</td>
+                                            <td>${c.price} VND</td>
+                                        </tr>
+                                    </tbody>
+                                </c:forEach>
+                            </table>
+                        </c:if>
+                    </div>
+                    <div class="place-tt"></div>
+                    <div class="place-total">
+                        <h4>Total: <span id="total-price" data-total-price="${totalPrice}">${totalPrice}</span> VND</h4>
+                        <h4>Shipping Fee: <span id="shipping-fee">0</span> VND</h4>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <a href="<%= request.getContextPath() %>/cart" class="btn btn-secondary"><i class="bi bi-cart2"></i>Back to Cart</a>
                 </div>
             </div>
-            <div class="mt-4">
-                <a href="<%= request.getContextPath() %>/home" class="btn btn-secondary"><i class="bi bi-house"></i> Back to Home</a>
-            </div>
-
         </div>
-
-
-        <!-- Bootstrap core JavaScript
-        ================================================== -->
-        <!-- Placed at the end of the document so the pages load faster -->
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-
         <script>
-            // Example starter JavaScript for disabling form submissions if there are invalid fields
-            (function () {
-                'use strict';
+            // Get shipping fees from backend (from Map)
+            const shippingFees = {
+                "Ninh Kieu": 20000,
+                "Binh Thuy": 25000,
+                "Cai Rang": 30000,
+                "O Mon": 35000,
+                "Thot Not": 40000,
+                "Phong Dien": 45000,
+                "Co Do": 50000,
+                "Thoi Lai": 55000,
+                "Vinh Thanh": 60000
+            };
+            function calculateShippingFee() {
+                let address = document.querySelector('select[name="address"]').value;
+                let shippingFee = shippingFees[address] || 0;
+                document.getElementById('shipping-fee').innerText = shippingFee;
+                let totalPriceElement = document.getElementById('total-price');
+                let baseTotalPrice = parseInt(totalPriceElement.getAttribute('data-total-price'));
+                let totalPrice = baseTotalPrice + shippingFee;
+                totalPriceElement.innerText = totalPrice;
+            }
 
-                window.addEventListener('load', function () {
-                    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-                    var forms = document.getElementsByClassName('needs-validation');
+            document.querySelector('select[name="address"]').addEventListener('change', calculateShippingFee);
+            function resetErrorMessages() {
+                document.querySelectorAll('.error-message').forEach(function (el) {
+                    el.style.display = 'none';
+                });
+            }
 
-                    // Loop over them and prevent submission
-                    var validation = Array.prototype.filter.call(forms, function (form) {
-                        form.addEventListener('submit', function (event) {
-                            if (form.checkValidity() === false) {
-                                event.preventDefault();
-                                event.stopPropagation();
-                            }
-                            form.classList.add('was-validated');
-                        }, false);
-                    });
-                }, false);
-            })();
+            function displayErrorMessage(id, message) {
+                let errorElement = document.getElementById(id);
+                if (errorElement) {
+                    errorElement.textContent = message;
+                    errorElement.style.display = 'block';
+                }
+            }
+
+            function validatePlaceOrder() {
+                let phone = document.querySelector('#placeOrder input[name="phone"]').value;
+                let deliveryAddress = document.querySelector('#placeOrder select[name="address"]').value;
+                // Reset error messages before validation
+                resetErrorMessages();
+                let hasError = false;
+
+                // Validate phone number
+                if (phone === '') {
+                    displayErrorMessage('phone-error', 'Please enter your phone number.');
+                    hasError = true;
+                } else {
+                    var phonePattern = /^(03[2-9]|05[6|8|9]|07[0|6-9]|08[1-6|8-9]|09[0-9])[0-9]{7}$/;
+                    if (/[@#%&*!-]/.test(phone) && /[a-zA-Z]/.test(phone)) {
+                        displayErrorMessage('phone-error', 'Phone number must not contain special characters and letters.');
+                        hasError = true;
+                    }
+                    else if (/[@#%&*!-]/.test(phone)) {
+                        displayErrorMessage('phone-error', 'Phone number must not contain special characters.');
+                        hasError = true;
+                    } else if (/[a-zA-Z]/.test(phone)) {
+                        displayErrorMessage('phone-error', 'Phone number must not contain letters.');
+                        hasError = true;
+                    } else if (phone.trim().length !== 10) {
+                        displayErrorMessage('phone-error', 'Phone number must be 10 digits.');
+                        hasError = true;
+                    } else if (!phonePattern.test(phone.trim())) {
+                        displayErrorMessage('phone-error', 'Your phone number is invalid!');
+                        hasError = true;
+                    }
+                }
+
+                // Validate address
+                if (deliveryAddress === '') {
+                    displayErrorMessage('delivery-address-error', 'Please select a delivery address.');
+                    hasError = true;
+                }
+
+                // If there is an error, prevent form submission
+                if (hasError) {
+                    return false;
+                }
+
+                // If all is valid, submit the form
+                return true;
+            }
+
+            document.getElementById('placeOrder').onsubmit = validatePlaceOrder;
+
         </script>
     </body>
 </html>

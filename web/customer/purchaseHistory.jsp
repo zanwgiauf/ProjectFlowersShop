@@ -22,11 +22,32 @@
             body {
                 padding: 20px;
             }
+
+            footer {
+                margin-top: 20px;
+                padding: 10px;
+                background-color: #f8f9fa;
+                text-align: center;
+            }
             .table-img {
                 width: 50px;
                 height: 50px;
+                object-fit: cover;
             }
+
+            .table-bordered th, .table-bordered td {
+                vertical-align: middle;
+            }
+
         </style>
+
+        <script>
+            function confirmBuyAgain(productId) {
+                var myModal = new bootstrap.Modal(document.getElementById('buyAgainModal'));
+                document.getElementById('productIdInput').value = productId;
+                myModal.show();
+            }
+        </script>
     </head>
     <body>
         <%
@@ -68,13 +89,20 @@
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a class="nav-link" href="<%= request.getContextPath() %>/pendingOrders">Pending</a>
+                                <a href="<%= request.getContextPath() %>/order/pendingOrder" class="nav-link btn btn-link">Pending</a>
                             </li>
-                            
                             <li class="nav-item">
-                                <a class="nav-link active fw-bold" href="<%=request.getContextPath()%>/purchaseHistory?customerID=<%=customerID%>">Completed</a>
+                                <a href="<%= request.getContextPath() %>/order/accepted" class="nav-link btn btn-link">Accepted</a>
                             </li>
-
+                            <li class="nav-item">
+                                <a href="<%= request.getContextPath() %>/order/delivering" class="nav-link btn btn-link">Delivering</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<%= request.getContextPath() %>/order/purchasehistory" class="nav-link btn btn-link active fw-bold">Purchase History</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<%= request.getContextPath() %>/order/cancelled" class="nav-link btn btn-link">Cancelled</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -84,30 +112,34 @@
             <div class="table-responsive">
                 <c:if test="${empty orderDetails}">
                     <div class="alert alert-info text-center" role="alert">
-                        No items in purchase history. <a class="text-decoration-none" href="<%= request.getContextPath() %>/shopping">Go shopping</a>
+                        No items in purchase history. <a class="text-decoration-none" href="<%= request.getContextPath() %>/product">Go shopping</a>
                     </div>
                 </c:if>
                 <c:if test="${not empty orderDetails}">
-                    <table class="table table-striped table-bordered">
+                    <table class="table table-bordered text-center align-middle">
                         <thead class="table-dark">
                             <tr>
                                 <th scope="col">Image</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Quantity</th>
                                 <th scope="col">Price</th>
+                                <th scope="col">Purchase Date</th>
+                                <th scope="col">Status</th>
                                 <th scope="col">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             <c:forEach var="detail" items="${orderDetails}">
                                 <tr>
-                                    <td><img src="${detail.image}" alt="Product Image" class="table-img"></td>
-                                    <td>${detail.name}</td>
-                                    <td>${detail.quantity}</td>
-                                    <td>${detail.price}</td>
-                                    <td>
-                                        <a href="<%= request.getContextPath() %>/buyAgain?id=${detail.productID}" class="btn btn-primary btn-sm me-2"><i class="bi bi-arrow-repeat"></i> Buy Again</a>
-                                        <a href="<%= request.getContextPath() %>/viewProduct?id=${detail.productID}" class="btn btn-success btn-sm me-2"><i class="bi bi-eye"></i> View Product</a>
+                                    <td class="align-middle"><img src="../${detail.image}" alt="Product Image" class="table-img"></td>
+                                    <td class="align-middle">${detail.name}</td>
+                                    <td class="align-middle">${detail.quantity}</td>
+                                    <td class="align-middle">${detail.price}</td>
+                                    <td class="align-middle">${detail.dateCreate}</td>
+                                    <td class="align-middle">${detail.status}</td>
+                                    <td class="align-middle">
+                                        <a href="javascript:void(0);" onclick="confirmBuyAgain(${detail.productID})" class="btn btn-primary btn-sm me-2"><i class="bi bi-arrow-repeat"></i> Buy Again</a>
+                                        <a href="<%= request.getContextPath() %>/viewProduct?id=${detail.productID}" class="btn btn-success btn-sm ms-2"><i class="bi bi-eye"></i> View Product</a>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -117,8 +149,31 @@
             </div>
 
             <div class="mt-4">
-                <a href="<%= request.getContextPath() %>/home" class="btn btn-secondary"><i class="bi bi-house"></i> Back to Home</a>
+                <a href="<%= request.getContextPath() %>/" class="btn btn-secondary"><i class="bi bi-house"></i> Back to Home</a>
             </div>
         </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="buyAgainModal" tabindex="-1" aria-labelledby="buyAgainModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="buyAgainModalLabel">Confirm Buy Again</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to buy this product again?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                        <form id="buyAgainForm" action="../order/buyAgain">
+                            <input type="hidden" name="productID" id="productIdInput">
+                            <button type="submit" name="btnBuyAgain" class="btn btn-primary">Yes, Buy Again</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </body>
 </html>

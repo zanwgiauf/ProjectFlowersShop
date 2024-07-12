@@ -12,7 +12,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.Enumeration;
 
 /**
  *
@@ -97,7 +96,7 @@ public class LogoutController extends HttpServlet {
             }
 
             // Redirect to home page
-            response.sendRedirect(request.getContextPath() + "/");
+            response.sendRedirect(request.getContextPath()+"/");
         }
     }
 

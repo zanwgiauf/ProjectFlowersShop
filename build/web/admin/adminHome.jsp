@@ -87,9 +87,15 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    <i class="bi bi-list-check"></i>
-                                    Manage Stock
+                                <a class="nav-link" href="<%=request.getContextPath()%>/managecategories">
+                                    <i class="bi bi-tags"></i>
+                                    Category
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<%=request.getContextPath()%>/promotions">
+                                    <i class="bi bi-piggy-bank-fill"></i>
+                                    Promotions
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -114,12 +120,7 @@
                                     List Customer Orders
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    <i class="bi bi-tags"></i>
-                                    Category
-                                </a>
-                            </li>
+                            
                         </ul>
                         <form action="logout" method="post" class="mt-3 d-flex justify-content-center align-items-center">
                             <button class="btn btn-outline-dark px-5" style="border-radius: 16px" name="btnLogout">Logout</button>
