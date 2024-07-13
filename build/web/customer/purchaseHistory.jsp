@@ -124,7 +124,6 @@
                                 <th scope="col">Quantity</th>
                                 <th scope="col">Price</th>
                                 <th scope="col">Purchase Date</th>
-                                <th scope="col">Status</th>
                                 <th scope="col">Actions</th>
                             </tr>
                         </thead>
@@ -136,10 +135,9 @@
                                     <td class="align-middle">${detail.quantity}</td>
                                     <td class="align-middle">${detail.price}</td>
                                     <td class="align-middle">${detail.dateCreate}</td>
-                                    <td class="align-middle">${detail.status}</td>
                                     <td class="align-middle">
                                         <a href="javascript:void(0);" onclick="confirmBuyAgain(${detail.productID})" class="btn btn-primary btn-sm me-2"><i class="bi bi-arrow-repeat"></i> Buy Again</a>
-                                        <a href="<%= request.getContextPath() %>/viewProduct?id=${detail.productID}" class="btn btn-success btn-sm ms-2"><i class="bi bi-eye"></i> View Product</a>
+                                        <a href="<%= request.getContextPath() %>/productdetails?productID=${detail.productID}" class="btn btn-success btn-sm ms-2"><i class="bi bi-eye"></i> View Product</a>
                                     </td>
                                 </tr>
                             </c:forEach>

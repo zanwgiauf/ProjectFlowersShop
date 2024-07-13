@@ -4,7 +4,6 @@ import DBConnect.DBConnection;
 import Models.Order;
 import Models.OrderDetail;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -98,7 +97,7 @@ public class OrderDAO {
     // Method to cancel order by order ID
 
     public boolean cancelOrder(int orderID) throws SQLException {
-        String query = "UPDATE Orders SET status = 3, dateCreate = ? WHERE orderID = ?";
+        String query = "UPDATE Orders SET status = 4, dateCreate = ? WHERE orderID = ?";
         try {
             ps = conn.prepareStatement(query);
             ps.setDate(1, java.sql.Date.valueOf(LocalDate.now())); // Update the dateCreate to current date
@@ -118,7 +117,7 @@ public class OrderDAO {
                 + "FROM OrderDetails od "
                 + "INNER JOIN Orders o ON od.orderID = o.orderID "
                 + "INNER JOIN Products p ON od.productID = p.productID "
-                + "WHERE o.customerID = ? AND o.status = 1"; // Assuming status 0 means pending
+                + "WHERE o.customerID = ? AND o.status = 2"; // Assuming status 0 means pending
 
         try {
             ps = conn.prepareStatement(query);
@@ -313,5 +312,20 @@ public class OrderDAO {
         }
 
         return list;
+    }
+
+    public boolean updateInfoOrder(String phone, String note, int orderID) {
+        String query = "UPDATE Orders SET phone = ? , note = ? WHERE orderID = ?";
+        try {
+            ps = conn.prepareStatement(query);
+            ps.setString(1, phone); 
+            ps.setString(2, note);
+            ps.setInt(3, orderID);
+            int rowsUpdated = ps.executeUpdate();
+            return rowsUpdated > 0;
+        } catch (SQLException e) {
+            System.out.println(e);
+            return false;
+        }
     }
 }

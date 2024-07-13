@@ -18,13 +18,28 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd" crossorigin="anonymous">
 
-       
+
     </head>
     <body>
+        <%
+            String fullName = "";
+            int customerID = 0;
+            Cookie cookies[] = request.getCookies();
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                        if (cookie.getName().equals("fullNameC")) {
+                            fullName = cookie.getValue();
+                        } else if (cookie.getName().equals("idC")) {
+                            customerID = Integer.parseInt(cookie.getValue());
+                        }
+                    }
+            }
+            AccountDAO ad = new AccountDAO();
+        %>
         <div class="mt-5">
             <h1 class="text-center text-info">Edit Information Order</h1>
             <div class="container mb-5 mt-5">
-                <form action="order" method="post" onsubmit="return validateForm()">
+                <form action="<%= request.getContextPath() %>/order" method="post" onsubmit="return validateForm()">
                     <c:forEach var="o" items="${infoOrder}" varStatus="loop">
                         <div class="mb-3 row">
                             <label for="orderID" class="col-sm-2 col-form-label">Order ID:</label>
@@ -36,15 +51,14 @@
                         <div class="mb-3 row">
                             <label for="orderFullname" class="col-sm-2 col-form-label">Fullname:</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="orderFullname" name="orderFullname" value="">
-                                <span id="fullname-error" class="text-danger"></span>
+                                <input type="text" class="form-control" id="orderFullname" readonly value="<%= ad.decodeString(fullName) %>">
                             </div>
                         </div>
 
                         <div class="mb-3 row">
                             <label for="orderPhone" class="col-sm-2 col-form-label">Phone:</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="orderPhone" name="orderPhone" value="${o.phone}">
+                                <input type="text" class="form-control" id="orderPhone" name="ePhone" value="${o.phone}">
                                 <span id="phone-error" class="text-danger"></span>
                             </div>
                         </div>
@@ -52,19 +66,19 @@
                         <div class="mb-3 row">
                             <label for="orderNote" class="col-sm-2 col-form-label">Note:</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="orderNote" name="orderNote" value="${o.note}">
+                                <input type="text" class="form-control" id="orderNote" name="eNote" value="${o.note}">
                             </div>
                         </div>
 
-                        <div class="action-buttons">
-                            <button type="submit" class="btn-edit btn btn-primary" name="btn-edit">Save</button>
-                            <button type="button" class="btn-cancel btn btn-secondary" name="btn-cancel" onclick="cancelEdit()">Cancel</button>
+                        <div class="d-flex justify-content-center align-content-center">
+                            <button type="submit" class="btn-edit btn btn-primary" name="btnEdit">Save</button>
+                           <a href="<%= request.getContextPath() %>/order/pendingOrder" class="nav-link btn btn-link bg-primary ms-2 px-2 text-white d-flex align-items-center justify-content-center">Cancel</a>
                         </div>
                     </c:forEach>
                 </form>
             </div>
         </div>
-         <script>
+        <script>
             function displayErrorMessage(id, message) {
                 document.getElementById(id).innerText = message;
             }
@@ -75,27 +89,7 @@
                 var fullName = document.getElementById('orderFullname').value;
                 var phone = document.getElementById('orderPhone').value;
 
-                // Validate full name
-                if (fullName.trim() === '') {
-                    displayErrorMessage('fullname-error', 'Please enter your full name.');
-                    hasError = true;
-                } else if (fullName.length < 2 || fullName.length > 50) {
-                    displayErrorMessage('fullname-error', 'Full name must be between 2 and 50 characters.');
-                    hasError = true;
-                } else if (/[@#%&*!-]/.test(fullName) && /\d/.test(fullName)) {
-                    displayErrorMessage('fullname-error', 'Full name must not contain numbers and special characters.');
-                    hasError = true;
-                } else if (/\d/.test(fullName)) {
-                    displayErrorMessage('fullname-error', 'Full name must not contain numbers.');
-                    hasError = true;
-                } else if (/[@#%&*!-]/.test(fullName)) {
-                    displayErrorMessage('fullname-error', 'Full name must not contain special characters.');
-                    hasError = true;
-                } else if (fullName.split('.').length - 1 > 1) {
-                    displayErrorMessage('fullname-error', 'Full name must not contain more than one dot.');
-                    hasError = true;
-                }
-
+                
                 // Validate phone number
                 if (phone === '') {
                     displayErrorMessage('phone-error', 'Please enter your phone number.');

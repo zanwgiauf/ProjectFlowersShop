@@ -99,6 +99,7 @@
                                 <th scope="col">Price</th>
                                 <th scope="col">Total Price</th>
                                 <th scope="col">Order Date</th>
+                                <th scope="col">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -110,7 +111,10 @@
                                     <td class="align-middle">${orderDetail.price}</td>
                                     <td class="align-middle">${orderDetail.totalPrice}</td>
                                     <td class="align-middle">${orderDetail.dateCreate}</td>
-                                    
+                                    <td class="align-middle">
+                                        <a href="javascript:void(0);" onclick="confirmCancel(${orderDetail.orderID})" class="btn btn-outline-danger btn-sm me-2"><i class="bi bi-x-circle"></i> Cancel Order</a>
+                                        <a href="../order/editInfoOrder/${orderDetail.orderID}" class="btn btn-outline-info btn-sm me-2"><i class="bi bi-pencil"></i> Edit Information Order</a>
+                                    </td>
                                 </tr>
                             </c:forEach>
                         </tbody>

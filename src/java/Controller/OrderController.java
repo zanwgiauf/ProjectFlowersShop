@@ -146,7 +146,7 @@ public class OrderController extends HttpServlet {
                     try {
                         cid = Integer.parseInt(cus_id);
                         List<OrderDetail> acceptedOrders = odao.getAcceptedOrdersByCustomerID(cid);
-                        request.setAttribute("deliveringOrders", acceptedOrders);
+                        request.setAttribute("acceptedOrders", acceptedOrders);
                         request.getRequestDispatcher("../customer/acceptedOrder.jsp").forward(request, response);
                     } catch (NumberFormatException | SQLException ex) {
                         throw new ServletException("Error retrieving orders", ex);
@@ -270,34 +270,6 @@ public class OrderController extends HttpServlet {
             String address = request.getParameter("address");
             String note = request.getParameter("note");
 
-            // Validate inputs
-            List<String> errors = new ArrayList<>();
-
-            // Phone number validation
-            if (phone == null || phone.isEmpty()) {
-                errors.add("Please enter your phone number.");
-            } else if (phone.matches(".*[@#%&*!-].*") && phone.matches(".*[a-zA-Z]+.*")) {
-                errors.add("Phone number must not contain special characters and letters.");
-            } else if (phone.matches(".*[@#%&*!-].*")) {
-                errors.add("Phone number must not contain special characters.");
-            } else if (phone.matches(".*[a-zA-Z]+.*")) {
-                errors.add("Phone number must not contain letters.");
-            } else if (phone.length() != 10) {
-                errors.add("Phone number must be 10 digits.");
-            } else if (!phone.matches("^(03[2-9]|05[6|8|9]|07[0|6-9]|08[1-6|8-9]|09[0-9])[0-9]{7}$")) {
-                errors.add("Your phone number is invalid!");
-            }
-
-            // Address validation
-            if (address == null || address.isEmpty()) {
-                errors.add("Please select a delivery address.");
-            }
-
-            if (!errors.isEmpty()) {
-                request.setAttribute("errors", errors);
-                request.getRequestDispatcher("checkout.jsp").forward(request, response);
-                return;
-            }
 
             String fullAddress = address + " Can Tho";
             int shippingFee = calculateShippingFee(address);
@@ -327,24 +299,17 @@ public class OrderController extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/cart");
 
         }
-        if (request.getParameter("btn-edit") != null) {
-//            Cookie cookies[] = request.getCookies();
-//            int customerID = 0;
-//            if (cookies != null) {
-//                for (Cookie cookie : cookies) {
-//                    if (cookie.getName().equals(("idC"))) {
-//                        customerID = Integer.parseInt(cookie.getValue());
-//                    }
-//                }
-//            }
-//            try {
-//                List<OrderDetail> pendingOrders = odao.getPendingOrdersByCustomerID(customerID);
-//                request.setAttribute("pendingOrders", pendingOrders);
-//                request.getRequestDispatcher("customer/pendingOrders.jsp").forward(request, response);
-//            } catch (NumberFormatException | SQLException ex) {
-//                throw new ServletException("Error retrieving orders", ex);
-//            }
+        if (request.getParameter("btnEdit") != null) {
+        String phone = request.getParameter("ePhone").trim();
+        String note = request.getParameter("eNote");
+        int orderID = Integer.parseInt(request.getParameter("orderID"));
+        try {
+            odao.updateInfoOrder(phone, note, orderID);
+            response.sendRedirect(request.getContextPath() + "/order/pendingOrder");
+        } catch (NumberFormatException ex) {
+            throw new ServletException("Error updating order information", ex);
         }
+    }
 
     }
 
